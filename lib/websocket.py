@@ -443,7 +443,7 @@ ready. """
 
 Returns:
 (bufs_list, closed_string)
-"""set
+"""
 
         closed = False
         bufs = []
