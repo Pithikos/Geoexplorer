@@ -1,16 +1,26 @@
+----------------------------- File structure -----------------------------------
+
 lib
   google_places.py -> Google Places API (radarSearch, textSearch, etc)
+  websocket.py     -> Module for socket connection between application and GUI
 
 classes
   Scanner.py   -> Scans a given area
   Scheduler.py -> Schedule for the scanner
   Limiter.py   -> Limiter(a filter) for the scanner
-  Messenger.py -> A medier between GUI and scanner
+  Messenger.py -> A medier between GUI and application
 
-scraper.py -> Main script that uses google_places.py and google_places_scanner
-
-google_places_scanner.py -> Module for using Google Places on big areas
+main.py -> Main script that uses google_places.py and google_places_scanner
 
 
+--------------------------------- Design ---------------------------------------
 
-scheduler+limiter -> Scanner -> txt+gui
+                      _________
+scheduler ---------> |         | --------> GUI
+                     | Scanner |    
+             .---->  |_________| ----.
+limiter -----'                       '---> Text
+
+
+From application to GUI:
+Scanner  ↔  GUI  ↔  Messenger  ↔  Websockets  ↔  JavaScript
