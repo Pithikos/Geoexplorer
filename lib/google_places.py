@@ -9,7 +9,7 @@ NOTES: For usage, check the README
 '''
 
 from urllib.request import *
-
+from urllib.parse import *
 
 # ---------------------------------- Configs -----------------------------------
 
