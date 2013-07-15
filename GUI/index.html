@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+   
+<head>
+   <meta charset="utf-8"/>
+   <title>Google Places+</title>
+   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=false&amp;language=se&amp;region=se">return;</script>
+   <script src="include/util.js"></script>
+   <script src="include/base64.js"></script>
+   <script src="include/websock.js"></script>
+   <script src="include/messenger.js"></script>
+</head>
+
+<body>
+     WebSocket/websockify URI: <input id='target' value="ws://127.0.0.1:9017">
+     <input id='connectButton' type='button' value='Connect' onclick="connect();">
+   <br> <br>
+   <input id='sendText'>
+   <input id='sendButton' type='button' value='Send' disabled onclick="send();">
+   <br> <br>
+   Log:<br><textarea id="messages" cols=80 rows=25></textarea>
+   <div id="map"/>
+</body>
+
+<!-- Websock -->
+<script>
+var $D = function(id) { return document.getElementById(id); },
+   ws = null, msgs = $D('messages');
+</script>
+
+<!-- Map -->
+<script>
+var $D = function(id) { return document.getElementById(id); },
+   ws = null, msgs = $D('messages');
+</script>
+
+</html>

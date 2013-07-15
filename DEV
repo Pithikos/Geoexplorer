@@ -1,0 +1,16 @@
+lib
+  google_places.py -> Google Places API (radarSearch, textSearch, etc)
+
+classes
+  Scanner.py   -> Scans a given area
+  Scheduler.py -> Schedule for the scanner
+  Limiter.py   -> Limiter(a filter) for the scanner
+  Messenger.py -> A medier between GUI and scanner
+
+scraper.py -> Main script that uses google_places.py and google_places_scanner
+
+google_places_scanner.py -> Module for using Google Places on big areas
+
+
+
+scheduler+limiter -> Scanner -> txt+gui
