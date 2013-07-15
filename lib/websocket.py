@@ -815,10 +815,10 @@ be overridden) for each new client connection.
                     if self.run_once:
                         # Run in same process if run_once
                         self.top_new_client(startsock, address)
-                        if self.ws_connection :
+                        '''if self.ws_connection :
                             self.msg('%s: exiting due to --run-once'
                                     % address[0])
-                            #break #¤LETS CLIENT RECONNECT ONCE DISCONNECTED
+                        break'''#¤LETS CLIENT RECONNECT ONCE DISCONNECTED
                     elif multiprocessing:
                         self.vmsg('%s: new handler Process' % address[0])
                         p = multiprocessing.Process(
