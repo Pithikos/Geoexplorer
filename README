@@ -1,0 +1,14 @@
+============================== GOOGLE PLACES PLUS  =============================
+
+Author: Johan Hanssen Seferidis
+Created: 2013-06-20
+Updated: 2013-07-16
+
+Description: Google Places Plus advances Google Places
+
+==================================== Usage  ====================================
+
+1. Make sure that the Google key in the configuration
+   corresponds to your own key.
+2. Run: python -B main.py
+3. Open ./GUI/index.html with a webbrowser
