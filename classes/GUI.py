@@ -18,10 +18,8 @@ class GUI:
       pass
 
 
-   def add_marker(self, coords):
-      #Send message to socket
-      #messenger.send("draw:marker:"+position)
-      print(position)
+   def add_marker(self, lat, lng):
+      self.messenger.send("draw:marker:"+lat+","+lng)
 
 
    def show_message(self, message):
