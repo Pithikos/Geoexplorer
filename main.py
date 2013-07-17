@@ -11,15 +11,12 @@ from classes.Messenger import *
 import webbrowser
 
 # Configs
-pathLogs='./log'
-saveFilePath='./scraped/scraped_offers_only_ordpris'+datetime.datetime.now().strftime("%Y-%m-%d_%H.%M"); #list with lan and kommun
-GUI=False
-browserPath="/usrfirefox"
+from config import config
 
 # ---------------------------------- Messenger ---------------------------------
 
 
-# Handling incoming messages
+# Handling incoming messages from GUI
 def handler(msg):
    if (msg == "PAUSE"):
       print("Client asks to pause application")
@@ -27,26 +24,30 @@ def handler(msg):
       print("Client asks to close application")
 
 
-server = Messenger('', 9017)
-server.setHandler(handler)
-Thread(target=server.start_server).start()
-
-
-
-
 # ------------------------------------ Main ------------------------------------
 
 
 # Main thread
+'''
 while 1:
    sleep(1)
    server.send("uno")
+'''
 
-# Create the scanner
-scanner=Scanner([58.608334, 14.392090, 58.066256, 16.259766])
+# Make Messenger
+msn = Messenger('', config['GUIport'])
+msn.setHandler(handler)
+Thread(target=msn.start_server).start()
+
+# Make GUI
+GUI=GUI(msn)
+
+# Make Scanner
+scanner=Scanner(GUI, config['Gkey'])
+scanner.set_bounds([58.608334, 14.392090, 58.066256, 16.259766])
 scanner.show_config()
 
-# 
+# Start scanning
 scanner.start_scanning('textsearch', 'grocery in Sweden')
 
 '''

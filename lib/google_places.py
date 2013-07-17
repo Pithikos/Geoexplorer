@@ -13,13 +13,16 @@ from urllib.parse import *
 
 # ---------------------------------- Configs -----------------------------------
 
-G_API_key='AIzaSyCMHNMC8ijFWXQFNrKy5FJ-uYSTZYrdAlM';
+G_API_key=None;
 G_base="https://maps.googleapis.com/maps/api/place/";
 G_sensor="false";
 
 
 # ---------------------------------- Actions -----------------------------------
 
+def G_set_key(newkey):
+   global G_API_key
+   G_API_key=newkey
 
 def G_sendRequest(url):
    try:
