@@ -8,35 +8,46 @@ function msg(str) {
 }
 
 function connect() {
-   var uri = $D('target').value;
+   var uri = 'ws://127.0.0.1:9017';
    ws = new Websock()
-   msg("connecting to: " + uri);
    ws.open(uri);
    ws.on('open', function () {
-       msg("Connected");
+       msg("Connected to application: " + uri);
    });
    ws.on('message', function () {
-       msg("Received: " + ws.rQshiftStr());
+       recv(ws.rQshiftStr());
    });
    ws.on('close', function () {
        disconnect();
-       msg("Disconnected");
+       msg("Connection with application closed");
+       msg("Restart the application and refresh this page");
    });
-
-   $D('connectButton').value = "Disconnect";
-   $D('connectButton').onclick = disconnect;
    $D('sendButton').disabled = false;
 }
+
 
 function disconnect() {
    if (ws) { ws.close(); }
    ws = null;
-
-   $D('connectButton').value = "Connect";
-   $D('connectButton').onclick = connect;
    $D('sendButton').disabled = true;
 }
 
+// -----------------------------------------------------------------------------
+
+// Incoming messages
+function recv(str) {
+   pcs=str.split(':'); 
+   action=pcs[0]
+   object=pcs[1]
+   
+   if (action=="draw" && object=="marker"){
+      coords=pcs[2].split(',')
+      addMarker(coords[0], coords[1]);
+   }
+   
+}
+
+// Send a message to application
 function send() {
    msg("Sending: " + $D('sendText').value);
    ws.send_string($D('sendText').value);
