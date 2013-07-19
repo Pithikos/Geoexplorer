@@ -28,9 +28,9 @@ class Scanner:
 
 
    # Set outer bounds for the scanning
-   def set_bounds(self, bounds):
-      self.bounds=bounds
-   
+   def set_bounds(self, lat1, lng1, lat2, lng2):
+      self.bounds=[lat1, lng1, lat2, lng2]
+      self.GUI.add_box(lat1, lng1, lat2, lng2)
    
    
    # Start scanning
