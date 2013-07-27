@@ -44,7 +44,7 @@ GUI=GUI(msn)
 
 # Make Scanner
 scanner=Scanner(GUI, config['Gkey'])
-scanner.set_bounds(58.608334, 14.392090, 58.066256, 16.259766)
+scanner.set_bounds(config['limiter']['bounds'])
 scanner.show_config()
 
 # Start scanning

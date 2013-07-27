@@ -7,10 +7,33 @@ config={
    # Paths
    'browserPath': '/usrfirefox',
 
-   # Start GUI automatically when application is ran
-   'AutostartGUI': False,
-
    # Port for GUI
-   'GUIport': 9017
+   'GUIport': 9017,
+   
+   # Rules from Google
+   'Grules':
+   {
+      'maxScannableDistance': 50000,        # max radius distance for scanning in m
+      'maxLat': 89
+   },
+   
+   
+   # Limit the results from scanning
+   'limiter':
+   {
+      #'bounds':  [85, 10, 0, 65], # Lat, Lng, Lat2, Lng2
+      #'bounds':  [-30, 10.0, 30, 0.0],
+      'bounds':  [66, 11, 57, 27],
+      #'bounds':  [60, 17, 57, 19],
+      #'bounds':  [59.5, 17.38, 58.9, 18.7], # Don't scan outside these bounds
+      'country': 'se'                        # Scan only inside specific country
+   },
+   
+   
+   # Schedule the timings of the scanning
+   'scheduler':
+   {
+      
+   }
    
 }
