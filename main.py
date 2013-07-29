@@ -48,8 +48,9 @@ scanner.set_bounds(config['limiter']['bounds'])
 scanner.show_config()
 
 # Start scanning
-scanner.start_scanning('textsearch', 'grocery in Sweden')
-
+searchitems={"name": "ica", "types": "grocery_or_supermarket"};
+scanner.start_scanning('radarsearch', ['59.336458,18.009338', 5000, searchitems])
+#scanner.start_scanning('textsearch', 'grocery in Sweden')
 '''
    searchitem={"keyword": "grocery", "name": "ica", "types": "grocery_or_supermarket"};
    xml = G_radarsearch(loc, rad, searchitem)

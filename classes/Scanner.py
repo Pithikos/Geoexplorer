@@ -42,7 +42,9 @@ class Scanner:
          bounds=[lat2, lng2, lat1, lng1]
          
       self.bounds=bounds
-      #self.GUI.add_box(bounds[0], bounds[1], bounds[2], bounds[3])
+      self.GUI.add_box(bounds[0], bounds[1], bounds[2], bounds[3], "red")
+      self.GUI.center_map(bounds[0], bounds[1], bounds[2], bounds[3])
+      print(bounds)
    
    
    # Start scanning
@@ -131,31 +133,34 @@ class Scanner:
       if (tool == 'textsearch'):
          print("Textsearch: ", args)
          xml = G_textsearch(args)
-         root = etree.fromstring(xml)
-         
-         # Get location of each result
-         #print(etree.tostring(root).decode("utf-8"))
-         status = root[0].text
-         token  = None
+      elif (tool == 'radarsearch'):
+         print("Radarsearch: ", args)
+         xml = G_radarsearch(args[0], args[1], args[2])
+      
+      root = etree.fromstring(xml)
+      
+      # Get location of each result
+      #print(etree.tostring(root).decode("utf-8"))
+      status = root[0].text
+      token  = None
 
-         if (status == 'OK'):
-            root.remove(root[0])
-         else:
-            return
+      if (status == 'OK'):
+         root.remove(root[0])
+      else:
+         return
 
-         if (root[-1].tag == "next_page_token"):
-            token=root[-1].text
-            root.remove(root[-1])
-   
-         #DO SOMETHING WITH NEXT_TOKEN
-         
-         # Get locations from results
-         for result in root:
-            for el in result:
-               if (el.tag == 'geometry'):
-                  lat=el[0][0].text
-                  lng=el[0][1].text
-                  #self.GUI.add_marker(lat, lng)
+      if (root[-1].tag == "next_page_token"):
+         token=root[-1].text
+         root.remove(root[-1])
+      #DO SOMETHING WITH NEXT_TOKEN
+      
+      # Get locations from results
+      for result in root:
+         for el in result:
+            if (el.tag == 'geometry'):
+               lat=el[0][0].text
+               lng=el[0][1].text
+               self.GUI.add_marker(lat, lng)
 
 
    def stop_scanning(self):

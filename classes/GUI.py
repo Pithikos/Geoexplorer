@@ -16,12 +16,14 @@ class GUI:
          colorhex='#FF0000'
       elif (color=='green'):
          colorhex='#00FF00'
-         
       self.messenger.send("draw:box:"+str(lat1)+","+str(lng1)+","+str(lat2)+","+str(lng2)+","+colorhex)
-
 
    def add_marker(self, lat, lng):
       self.messenger.send("draw:marker:"+lat+","+lng)
+
+
+   def center_map(self, lat, lng, lat2, lng2):
+      self.messenger.send("change:view:"+str(lat)+","+str(lng)+","+str(lat2)+","+str(lng2))
 
 
    def show_message(self, message):

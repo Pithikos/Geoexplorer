@@ -7,6 +7,7 @@
 
 "use strict"
 
+
 function addMarker(lat, lng) {
    //msg("Will add marker at: "+lat+", "+lng)
    
@@ -18,6 +19,7 @@ function addMarker(lat, lng) {
    });
    
 }
+
 
 // General box
 function addBox(lat1, lng1, lat2, lng2, color) {
@@ -35,5 +37,12 @@ function addBox(lat1, lng1, lat2, lng2, color) {
       map: map,
       bounds: new google.maps.LatLngBounds(loc1, loc2)
   });
+}
 
+// Center map to specific location
+function centerMap(lat1, lng1, lat2, lng2) {
+   var loc1=new google.maps.LatLng(lat1, lng1)
+   var loc2=new google.maps.LatLng(lat2, lng2)
+   var bounds=new google.maps.LatLngBounds(loc1, loc2)
+   map.fitBounds(bounds)
 }

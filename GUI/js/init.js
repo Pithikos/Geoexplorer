@@ -19,5 +19,6 @@ function init() {
 
    // Connect to server
    connect();
+
 }
 google.maps.event.addDomListener(window, 'load', init);

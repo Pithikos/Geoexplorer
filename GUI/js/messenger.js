@@ -50,6 +50,11 @@ function recv(str) {
       addBox(args[0], args[1], args[2], args[3], args[4]);
    }
    
+   if (action=="change" && object=="view"){
+      coords=pcs[2].split(',')
+      centerMap(coords[0], coords[1], coords[2], coords[3])
+   }
+   
 }
 
 // Send a message to application
