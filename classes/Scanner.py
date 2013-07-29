@@ -49,7 +49,7 @@ class Scanner:
    def start_scanning(self, tool, args):
       if not self.limiter:
          print("Scanning without limiter will not filter out any results")
-      
+
       print("Distance between points is " + str(dist(self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3])))
 
       # Split big box in pieces with max 50000m each piece
@@ -89,22 +89,7 @@ class Scanner:
          box1=[lat1, lng1, lat2, midLng]
          box2=[lat1, midLng, lat2, lng2]
          return box1, box2
-      
-      
-      '''for i in range(len(boxes)):
-            box=boxes[i]
-            x=dist(box[0], box[1], box[0], box[3])
-            y=dist(box[0], box[1], box[2], box[1])
-            print("x: "+str(x))
-            print("y: "+str(y))
-            if (x>maxDist) or (y>maxDist):
-               b1, b2, b3, b4 = splitBoxIn4(boxes[i])
-               boxes.pop(i)
-               boxes.append(b1)
-               boxes.append(b2)
-               boxes.append(b3)
-               boxes.append(b4)'''
-               
+
       # See if splitting is needed     
       def existsTooBigDist():
          for box in boxes:
@@ -114,14 +99,12 @@ class Scanner:
                return True
          return False
       
-      # Split box in minor boxes
+      # Split box in minor boxes if needed
       while(existsTooBigDist()):
          for i in range(len(boxes)):
             box=boxes[i]
             x=dist(box[0], box[1], box[0], box[3])
             y=dist(box[0], box[1], box[2], box[1])
-            #print("x: "+str(x))
-            #print("y: "+str(y))
             if (x>maxDist) and (y>maxDist):
                b1, b2, b3, b4 = splitBoxIn4(boxes[i])
                boxes.pop(i)
@@ -131,45 +114,18 @@ class Scanner:
                boxes.append(b4)
             elif (x>maxDist):
                b1, b2 = splitBoxVertically(boxes[i])
-               #print("Splitting vertically")
                boxes.pop(i)
                boxes.append(b1)
                boxes.append(b2)
             elif (y>maxDist):
                b1, b2 = splitBoxHorizontally(boxes[i])
-               #print("Splitting horizontally")
                boxes.pop(i)
                boxes.append(b1)
                boxes.append(b2)
-         
 
-         
-
+      # Add boxes on map
       for box in boxes:
-         print("Will add box: ", box)
-         self.GUI.add_box(box[0], box[1], box[2], box[3])
-
-      
-      print("BOXES: ", boxes)
-      
-      # Latitudes and longtitudes
-      '''
-      self.GUI.add_box(10, 10, 20, 20)
-      self.GUI.add_box(20, 20, 30, 30)
-      self.GUI.add_box(30, 30, 40, 40)
-      self.GUI.add_box(40, 40, 50, 50)
-      self.GUI.add_box(50, 50, 60, 60)
-      self.GUI.add_box(60, 60, 70, 70)
-      self.GUI.add_box(70, 70, 80, 80)
-      '''
-      '''
-      if (x>maxDist) or (y>maxDist):
-         boxes=splitBoxIn4(self.bounds)
-         for box in boxes:
-            print(box)
-            print("y/2: ", dist(box[0], box[1], box[2], box[1]))
-            self.GUI.add_box(box[0], box[1], box[2], box[3])
-      '''
+         self.GUI.add_box(box[0], box[1], box[2], box[3], 'red')
       
       # FOR EVERY SUB-AREA IN BIG BOX
       if (tool == 'textsearch'):

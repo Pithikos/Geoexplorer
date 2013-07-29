@@ -8,7 +8,7 @@
 "use strict"
 
 function addMarker(lat, lng) {
-   msg("Will add marker at: "+lat+", "+lng)
+   //msg("Will add marker at: "+lat+", "+lng)
    
    var loc=new google.maps.LatLng(lat, lng)
    
@@ -19,18 +19,19 @@ function addMarker(lat, lng) {
    
 }
 
-function addBox(lat1, lng1, lat2, lng2) {
-   msg("Boundaries set to: "+lat1+", "+lng1+", "+lat2+", "+lng2)
+// General box
+function addBox(lat1, lng1, lat2, lng2, color) {
+   //msg("Boundaries set to: "+lat1+", "+lng1+", "+lat2+", "+lng2)
    
    var loc1=new google.maps.LatLng(lat1, lng1)
    var loc2=new google.maps.LatLng(lat2, lng2)
    
    var rectangle = new google.maps.Rectangle({
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35,
+      strokeColor: color,
+      strokeOpacity: 0.7,
+      strokeWeight: 1,
+      fillColor: color,
+      fillOpacity: 0.09,
       map: map,
       bounds: new google.maps.LatLngBounds(loc1, loc2)
   });

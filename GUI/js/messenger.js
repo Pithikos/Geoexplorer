@@ -46,8 +46,8 @@ function recv(str) {
    }
    
    if (action=="draw" && object=="box"){
-      coords=pcs[2].split(',')
-      addBox(coords[0], coords[1], coords[2], coords[3]);
+      args=pcs[2].split(',')
+      addBox(args[0], args[1], args[2], args[3], args[4]);
    }
    
 }

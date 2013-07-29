@@ -48,7 +48,6 @@ class Messenger(WebSocketServer):
 # ------------------------------------------------------------------------------
 
 # WORKING EXAMPLE (needs to import time)
-
 '''
 # Handling incoming messages
 def handler(msg):
