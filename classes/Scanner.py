@@ -46,6 +46,7 @@ class Scanner:
       self.GUI.center_map(bounds[0], bounds[1], bounds[2], bounds[3])
       print(bounds)
    
+   # ----------------------------------------------------------------------------------------------
    
    # Start scanning
    def start_scanning(self, tool, args):
@@ -64,8 +65,8 @@ class Scanner:
          lng1=coords[1]
          lat2=coords[2]
          lng2=coords[3]
-         midLat=round((lat1+lat2)/2, 5)
-         midLng=round((lng1+lng2)/2, 5)
+         midLat=middleLat(lat1, lat2)
+         midLng=middleLng(lng1, lng2)
          box1=[lat1, lng1, midLat, midLng]
          box2=[lat1, midLng, midLat, lng2]
          box3=[midLat, lng1, lat2, midLng]
@@ -107,20 +108,25 @@ class Scanner:
             box=boxes[i]
             x=dist(box[0], box[1], box[0], box[3])
             y=dist(box[0], box[1], box[2], box[1])
+            print("x: ", x)
+            print("y: ", y)
             if (x>maxDist) and (y>maxDist):
                b1, b2, b3, b4 = splitBoxIn4(boxes[i])
+               print("4split")
                boxes.pop(i)
                boxes.append(b1)
                boxes.append(b2)
                boxes.append(b3)
                boxes.append(b4)
-            elif (x>maxDist):
+            elif (x>maxDist) and not (y>maxDist):
                b1, b2 = splitBoxVertically(boxes[i])
+               print("Xsplit")
                boxes.pop(i)
                boxes.append(b1)
                boxes.append(b2)
-            elif (y>maxDist):
+            elif (y>maxDist) and not (x>maxDist):
                b1, b2 = splitBoxHorizontally(boxes[i])
+               print("Ysplit")
                boxes.pop(i)
                boxes.append(b1)
                boxes.append(b2)
@@ -135,7 +141,23 @@ class Scanner:
          xml = G_textsearch(args)
       elif (tool == 'radarsearch'):
          print("Radarsearch: ", args)
-         xml = G_radarsearch(args[0], args[1], args[2])
+         box=boxes[0]
+         latCenter=middleLat(box[0],box[2])
+         lngCenter=middleLng(box[1],box[3])
+         location=str(latCenter)+','+str(lngCenter)
+         print("Searching at: ", location)
+         print("Coords: ", box)
+         
+         xdist=dist(box[0], box[1], box[0], box[3])
+         ydist=dist(box[0], box[1], box[2], box[1])
+         
+         print("xdist: ",xdist)
+         print("ydist: ",ydist)
+         radius=max(xdist, ydist)/2
+         print("radius: ", radius)
+         #self.GUI.add_box(box[0], box[1], latCenter, lngCenter, 'green')
+         self.GUI.add_box(box[0], box[1], box[1], 18, 'green')
+         xml = G_radarsearch(location, radius, args)
       
       root = etree.fromstring(xml)
       
@@ -152,6 +174,7 @@ class Scanner:
       if (root[-1].tag == "next_page_token"):
          token=root[-1].text
          root.remove(root[-1])
+         
       #DO SOMETHING WITH NEXT_TOKEN
       
       # Get locations from results

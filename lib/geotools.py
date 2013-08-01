@@ -20,3 +20,11 @@ def dist(lat1, lon1, lat2, lon2):
     x = sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(dlon)
     c = atan2(y, x)
     return EARTH_R * c * 1000
+
+
+def middleLat(lat1, lat2):
+   return round((lat1+lat2)/2, 5)
+
+
+def middleLng(lng1, lng2):
+   return round((lng1+lng2)/2, 5)
