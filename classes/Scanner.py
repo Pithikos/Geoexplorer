@@ -1,10 +1,12 @@
 from lib.google_places import *
-from lib.geotools import *
 from lxml import etree
 
 from classes.GUI import *
+from classes.Grid import *
 
 from config import *
+
+from time import sleep
 
 class Scanner:
    
@@ -55,135 +57,59 @@ class Scanner:
 
       print("Distance between points is " + str(dist(self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3])))
 
-      # Split big box in pieces with max 50000m each piece
-      maxDist=config['Grules']['maxScannableDistance']
-      boxes=[]
-      boxes.append(self.bounds)
-      
-      def splitBoxIn4(coords):
-         lat1=coords[0]
-         lng1=coords[1]
-         lat2=coords[2]
-         lng2=coords[3]
-         midLat=middleLat(lat1, lat2)
-         midLng=middleLng(lng1, lng2)
-         box1=[lat1, lng1, midLat, midLng]
-         box2=[lat1, midLng, midLat, lng2]
-         box3=[midLat, lng1, lat2, midLng]
-         box4=[midLat, midLng, lat2, lng2]
-         return box1, box2, box3, box4
-         
-      def splitBoxHorizontally(coords):
-         lat1=coords[0]
-         lng1=coords[1]
-         lat2=coords[2]
-         lng2=coords[3]
-         midLat=round((lat1+lat2)/2, 5)
-         box1=[lat1, lng1, midLat, lng2]
-         box2=[midLat, lng1, lat2, lng2]
-         return box1, box2
-         
-      def splitBoxVertically(coords):
-         lat1=coords[0]
-         lng1=coords[1]
-         lat2=coords[2]
-         lng2=coords[3]
-         midLng=round((lng1+lng2)/2, 5)
-         box1=[lat1, lng1, lat2, midLng]
-         box2=[lat1, midLng, lat2, lng2]
-         return box1, box2
+      # Make a grid of scannable boxes
+      grid=Grid(self.bounds) 
+      self.GUI.add_grid(grid)
 
-      # See if splitting is needed     
-      def existsTooBigDist():
-         for box in boxes:
-            x=dist(box[0], box[1], box[0], box[3])
-            y=dist(box[0], box[1], box[2], box[1])
-            if (x>maxDist) or (y>maxDist):
-               return True
-         return False
-      
-      # Split box in minor boxes if needed
-      while(existsTooBigDist()):
-         for i in range(len(boxes)):
-            box=boxes[i]
-            x=dist(box[0], box[1], box[0], box[3])
-            y=dist(box[0], box[1], box[2], box[1])
-            print("x: ", x)
-            print("y: ", y)
-            if (x>maxDist) and (y>maxDist):
-               b1, b2, b3, b4 = splitBoxIn4(boxes[i])
-               print("4split")
-               boxes.pop(i)
-               boxes.append(b1)
-               boxes.append(b2)
-               boxes.append(b3)
-               boxes.append(b4)
-            elif (x>maxDist) and not (y>maxDist):
-               b1, b2 = splitBoxVertically(boxes[i])
-               print("Xsplit")
-               boxes.pop(i)
-               boxes.append(b1)
-               boxes.append(b2)
-            elif (y>maxDist) and not (x>maxDist):
-               b1, b2 = splitBoxHorizontally(boxes[i])
-               print("Ysplit")
-               boxes.pop(i)
-               boxes.append(b1)
-               boxes.append(b2)
-
-      # Add boxes on map
-      for box in boxes:
-         self.GUI.add_box(box[0], box[1], box[2], box[3], 'red')
-      
-      # FOR EVERY SUB-AREA IN BIG BOX
+      # SHOW INFO
       if (tool == 'textsearch'):
          print("Textsearch: ", args)
-         xml = G_textsearch(args)
       elif (tool == 'radarsearch'):
          print("Radarsearch: ", args)
-         box=boxes[0]
-         latCenter=middleLat(box[0],box[2])
-         lngCenter=middleLng(box[1],box[3])
-         location=str(latCenter)+','+str(lngCenter)
-         print("Searching at: ", location)
-         print("Coords: ", box)
-         
-         xdist=dist(box[0], box[1], box[0], box[3])
-         ydist=dist(box[0], box[1], box[2], box[1])
-         
-         print("xdist: ",xdist)
-         print("ydist: ",ydist)
-         radius=max(xdist, ydist)/2
-         print("radius: ", radius)
-         #self.GUI.add_box(box[0], box[1], latCenter, lngCenter, 'green')
-         self.GUI.add_box(box[0], box[1], box[1], 18, 'green')
-         xml = G_radarsearch(location, radius, args)
-      
-      root = etree.fromstring(xml)
-      
-      # Get location of each result
-      #print(etree.tostring(root).decode("utf-8"))
-      status = root[0].text
-      token  = None
 
-      if (status == 'OK'):
-         root.remove(root[0])
-      else:
-         return
 
-      if (root[-1].tag == "next_page_token"):
-         token=root[-1].text
-         root.remove(root[-1])
+      # Search for each box
+      for box in grid.boxes:
+         sleep(3)
+         # FOR EVERY SUB-AREA IN BIG BOX
+         if (tool == 'textsearch'):
+            xml = G_textsearch(args)
+         elif (tool == 'radarsearch'):
+            lat, lng = grid.getBoxCenter(box)
+            location=str(lat)+','+str(lng)
+            print("Searching at: ", location)
+            print("Coords: ", box)
+            xdist=grid.getBoxDistx(box)
+            ydist=grid.getBoxDisty(box)
+            radius=max(xdist, ydist)/2
+            self.GUI.add_box(box[0], box[1], box[2], box[3], 'green')
+            xml = G_radarsearch(location, radius, args)
          
-      #DO SOMETHING WITH NEXT_TOKEN
-      
-      # Get locations from results
-      for result in root:
-         for el in result:
-            if (el.tag == 'geometry'):
-               lat=el[0][0].text
-               lng=el[0][1].text
-               self.GUI.add_marker(lat, lng)
+         root = etree.fromstring(xml)
+         
+         # Get location of each result
+         #print(etree.tostring(root).decode("utf-8"))
+         status = root[0].text
+         token  = None
+   
+         if (status == 'OK'):
+            root.remove(root[0])
+         else:
+            return
+   
+         if (root[-1].tag == "next_page_token"):
+            token=root[-1].text
+            root.remove(root[-1])
+            
+         #DO SOMETHING WITH NEXT_TOKEN
+         
+         # Get locations from results
+         for result in root:
+            for el in result:
+               if (el.tag == 'geometry'):
+                  lat=el[0][0].text
+                  lng=el[0][1].text
+                  self.GUI.add_marker(lat, lng)
 
 
    def stop_scanning(self):

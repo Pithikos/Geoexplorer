@@ -28,3 +28,7 @@ class GUI:
 
    def show_message(self, message):
       self.messenger.send(message)
+
+   def add_grid(self, grid):
+      for box in grid.boxes:
+         self.add_box(box[0], box[1], box[2], box[3], 'red')
