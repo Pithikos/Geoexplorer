@@ -4,6 +4,7 @@
 "use strict"
 
 var map=null;
+var boxes=new Array();
 
 function init() {
    

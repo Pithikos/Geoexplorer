@@ -50,6 +50,11 @@ function recv(str) {
       addBox(args[0], args[1], args[2], args[3], args[4]);
    }
    
+   if (action=="remove" && object=="box"){
+      args=pcs[2].split(',')
+      removeBox(args[0], args[1], args[2], args[3]);
+   }
+   
    if (action=="change" && object=="view"){
       coords=pcs[2].split(',')
       centerMap(coords[0], coords[1], coords[2], coords[3])

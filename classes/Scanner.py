@@ -67,12 +67,17 @@ class Scanner:
       elif (tool == 'radarsearch'):
          print("Radarsearch: ", args)
 
-
+      print(grid.boxes)
+      print("Number of boxes: ", len(grid.boxes))
       # Search for each box
       for box in grid.boxes:
          sleep(3)
+         print(box)
+         #self.GUI.add_box(box[0], box[1], box[2], box[3], 'green')
+         self.GUI.remove_box(box[0], box[1], box[2], box[3])
+         print("Remove: ", box)
          # FOR EVERY SUB-AREA IN BIG BOX
-         if (tool == 'textsearch'):
+         '''if (tool == 'textsearch'):
             xml = G_textsearch(args)
          elif (tool == 'radarsearch'):
             lat, lng = grid.getBoxCenter(box)
@@ -88,14 +93,16 @@ class Scanner:
          root = etree.fromstring(xml)
          
          # Get location of each result
-         #print(etree.tostring(root).decode("utf-8"))
+         print(etree.tostring(root).decode("utf-8"))
          status = root[0].text
          token  = None
    
          if (status == 'OK'):
             root.remove(root[0])
+         elif (status == 'ZERO_RESULTS'):
+            continue
          else:
-            return
+            continue
    
          if (root[-1].tag == "next_page_token"):
             token=root[-1].text
@@ -110,7 +117,7 @@ class Scanner:
                   lat=el[0][0].text
                   lng=el[0][1].text
                   self.GUI.add_marker(lat, lng)
-
+         '''
 
    def stop_scanning(self):
       pass
