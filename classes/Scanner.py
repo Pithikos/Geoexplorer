@@ -41,7 +41,7 @@ class Scanner:
       lng2=bounds[3]
       
       if (lat1<lat2) or (lng1>lng2): #swap couples
-         bounds=[lat2, lng2, lat1, lng1]
+         bounds=(lat2, lng2, lat1, lng1)
          
       self.bounds=bounds
       self.GUI.add_box(bounds[0], bounds[1], bounds[2], bounds[3], "red")
@@ -67,17 +67,14 @@ class Scanner:
       elif (tool == 'radarsearch'):
          print("Radarsearch: ", args)
 
-      print(grid.boxes)
-      print("Number of boxes: ", len(grid.boxes))
+
       # Search for each box
       for box in grid.boxes:
-         sleep(3)
-         print(box)
-         #self.GUI.add_box(box[0], box[1], box[2], box[3], 'green')
+         sleep(1)
          self.GUI.remove_box(box[0], box[1], box[2], box[3])
-         print("Remove: ", box)
+         self.GUI.add_box(box[0], box[1], box[2], box[3], 'green')
          # FOR EVERY SUB-AREA IN BIG BOX
-         '''if (tool == 'textsearch'):
+         if (tool == 'textsearch'):
             xml = G_textsearch(args)
          elif (tool == 'radarsearch'):
             lat, lng = grid.getBoxCenter(box)
@@ -93,20 +90,22 @@ class Scanner:
          root = etree.fromstring(xml)
          
          # Get location of each result
-         print(etree.tostring(root).decode("utf-8"))
+         #print(etree.tostring(root).decode("utf-8"))
          status = root[0].text
          token  = None
    
          if (status == 'OK'):
             root.remove(root[0])
          elif (status == 'ZERO_RESULTS'):
+            print("Zero results for box: ", box)
             continue
          else:
-            continue
+            print("Error for box: ", box)
    
          if (root[-1].tag == "next_page_token"):
             token=root[-1].text
             root.remove(root[-1])
+            print("Received a token for box: ", box)
             
          #DO SOMETHING WITH NEXT_TOKEN
          
@@ -117,7 +116,7 @@ class Scanner:
                   lat=el[0][0].text
                   lng=el[0][1].text
                   self.GUI.add_marker(lat, lng)
-         '''
+
 
    def stop_scanning(self):
       pass

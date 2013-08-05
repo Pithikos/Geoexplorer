@@ -39,6 +39,9 @@ class Grid:
                self.boxes.pop(i)
                self.boxes.extend((b1, b2))
 
+      # Sort boxes
+      self.sort1Boxes()
+
 
    def getBoxCenter(self, box):
       latCenter=middleLat(box[0],box[2])
@@ -61,10 +64,10 @@ class Grid:
       lng2=coords[3]
       midLat=middleLat(lat1, lat2)
       midLng=middleLng(lng1, lng2)
-      box1=[lat1, lng1, midLat, midLng]
-      box2=[lat1, midLng, midLat, lng2]
-      box3=[midLat, lng1, lat2, midLng]
-      box4=[midLat, midLng, lat2, lng2]
+      box1=(lat1, lng1, midLat, midLng)
+      box2=(lat1, midLng, midLat, lng2)
+      box3=(midLat, lng1, lat2, midLng)
+      box4=(midLat, midLng, lat2, lng2)
       return box1, box2, box3, box4
 
 
@@ -75,8 +78,8 @@ class Grid:
       lat2=coords[2]
       lng2=coords[3]
       midLat=round((lat1+lat2)/2, 5)
-      box1=[lat1, lng1, midLat, lng2]
-      box2=[midLat, lng1, lat2, lng2]
+      box1=(lat1, lng1, midLat, lng2)
+      box2=(midLat, lng1, lat2, lng2)
       return box1, box2
 
 
@@ -87,8 +90,8 @@ class Grid:
       lat2=coords[2]
       lng2=coords[3]
       midLng=round((lng1+lng2)/2, 5)
-      box1=[lat1, lng1, lat2, midLng]
-      box2=[lat1, midLng, lat2, lng2]
+      box1=(lat1, lng1, lat2, midLng)
+      box2=(lat1, midLng, lat2, lng2)
       return box1, box2
 
 
@@ -100,3 +103,20 @@ class Grid:
          if (x>self.maxDist) or (y>self.maxDist):
             return True
       return False
+
+
+   # Sort boxes in style 1:
+   # 1 2 3
+   # 4 5 6
+   # 7 8 ..
+   def sort1Boxes(self):
+      self.boxes=sorted(self.boxes, key=lambda x: x[1])#by lng
+      self.boxes=sorted(self.boxes, key=lambda x: x[0], reverse=True)#by lat
+
+
+   # Sort boxes in style 2:
+   # 7 8 ..
+   # 4 5 6
+   # 1 2 3
+   def sort2Boxes(self):
+      self.boxes=sorted(self.boxes)

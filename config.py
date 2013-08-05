@@ -25,12 +25,13 @@ config={
       #'bounds':  [-30, 10.0, 30, 0.0],
       #'bounds':  [66, 11, 57, 27],  #scandinavia
       #'bounds':  [-10, 0, 75, -0.5],#vertical line
+      #'bounds':  [60, 17, 59, 19], #stockholm 4x4
       'bounds':  [60, 17, 57, 19], #stockholm+gotland
       #'bounds':  [59.5, 17.38, 58.9, 18.7], # Don't scan outside these bounds
       'country': 'se'                        # Scan only inside specific country
    },
-   
-   
+
+
    # Schedule the timings of the scanning
    'scheduler':
    {
