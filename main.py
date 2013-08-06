@@ -5,8 +5,6 @@ from threading import Thread # Needed for Messenger
 import datetime
 
 from classes.Scanner   import *
-from classes.Limiter   import *
-from classes.Scheduler import *
 from classes.Messenger import *
 import webbrowser
 
@@ -35,7 +33,7 @@ while 1:
 '''
 
 # Make Messenger
-msn = Messenger('', config['GUIport'])
+msn = Messenger('', config['GUI_port'])
 msn.setHandler(handler)
 Thread(target=msn.start_server).start()
 

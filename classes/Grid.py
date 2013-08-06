@@ -42,6 +42,8 @@ class Grid:
       # Sort boxes
       self.sort1Boxes()
 
+   def getN(self):
+      return len(this.boxes)
 
    def getBoxCenter(self, box):
       latCenter=middleLat(box[0],box[2])
