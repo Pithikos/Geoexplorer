@@ -1,26 +1,30 @@
 ----------------------------- File structure -----------------------------------
 
 lib
-  google_places.py -> Google Places API (radarSearch, textSearch, etc)
+  google_places.py -> Google Places service API (radarSearch, textSearch, etc)
   websocket.py     -> Module for socket connection between application and GUI
+  geotools.py      -> Geocoding functions and other tools
 
 classes
-  Scanner.py   -> Scans a given area
-  Scheduler.py -> Schedule for the scanner
-  Limiter.py   -> Limiter(a filter) for the scanner
-  Messenger.py -> A medier between GUI and application
-  Logger.py    -> Logs history, messages, responses, etc.
+  Grid              -> Keeps the structure for the search area
+  Scanner.py        -> Scans a given area
+  GUI.py            -> Used for the web GUI
+  Logger.py         -> Logs history, messages, responses, etc.
+  Requester.py      -> Makes request for every box
+  ResponseParser.py -> Parses the response from a request made for each box
+  
+config.py -> keeps configuration for application
 
-main.py -> Main script that uses google_places.py and google_places_scanner
+main.py -> Main script that should be partially coded by user
 
 
 --------------------------------- Design ---------------------------------------
 
                       _________
-scheduler ---------> |         | --------> GUI
+config    ---------> |         | --------> GUI
                      | Scanner |
-             .---->  |_________| ----.
-limiter -----'                       '---> Logger
+                     |_________| ----.
+                                     '---> Logger
 
 
 From application to GUI:

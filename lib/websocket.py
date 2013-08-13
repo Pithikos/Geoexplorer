@@ -58,7 +58,7 @@ for mod, msg in [('numpy', 'HyBi protocol will be slower'),
         globals()[mod] = __import__(mod)
     except ImportError:
         globals()[mod] = None
-        print("WARNING: no '%s' module, %s" % (mod, msg))
+        #print("WARNING: no '%s' module, %s" % (mod, msg))
 if multiprocessing and sys.platform == 'win32':
     # make sockets pickle-able/inheritable
     import multiprocessing.reduction
@@ -131,12 +131,12 @@ Sec-WebSocket-Accept: %s\r
             raise Exception("No 'ssl' module and SSL-only specified")
         if self.daemon and not resource:
             raise Exception("Module 'resource' required to daemonize")
-
+        '''
         # Show configuration
         print("WebSocket server settings:")
-        print(" - Listen on %s:%s" % (
+        #print(" - Listen on %s:%s" % (
                 self.listen_host, self.listen_port))
-        print(" - Flash security policy server")
+        #print(" - Flash security policy server")
         if self.web:
             print(" - Web server. Web root: %s" % self.web)
         if ssl:
@@ -151,7 +151,7 @@ Sec-WebSocket-Accept: %s\r
         if self.daemon:
             print(" - Backgrounding (daemon)")
         if self.record:
-            print(" - Recording to '%s.*'" % self.record)
+            print(" - Recording to '%s.*'" % self.record)'''
 
     #
     # WebSocketServer static methods
@@ -639,9 +639,9 @@ handshake data.
 
         response = self.do_websocket_handshake(wsh.headers, wsh.path)
 
-        self.msg("%s: %s WebSocket connection" % (address[0], stype))
-        self.msg("%s: Version %s, base64: '%s'" % (address[0],
-            self.version, self.base64))
+        print("Gui opened.")#self.msg("%s: %s WebSocket connection" % (address[0], stype))
+        #self.msg("%s: Version %s, base64: '%s'" % (address[0],
+        #    self.version, self.base64))
         if self.path != '/':
             self.msg("%s: Path: '%s'" % (address[0], self.path))
 

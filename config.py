@@ -1,52 +1,52 @@
 # Configuration values for Google Places Plus
 config={
 
-   # Google KEY
-   'Gkey':        'AIzaSyCMHNMC8ijFWXQFNrKy5FJ-uYSTZYrdAlM',
-
    # Port for GUI
-   'GUI_port': 9017,
+   'GUI_PORT': 9017,
+   
+   # Key for the service used
+   'SERVICE_KEY': 'AIzaSyCMHNMC8ijFWXQFNrKy5FJ-uYSTZYrdAlM', # String or None
 
    # Log files
-   'log_path'             : '/log',
-   'log_scan_filename'    : 'scan.log',
-   'log_gstics_filename'  : 'gstics.log',
-   'log_result_filename'  : 'result.log',
+   'LOG_PATH'             : '/log',
+   'LOG_SCAN_FILENAME'    : 'scan.log',   # Name of log for the scanning process
+   'LOG_STATS_FILENAME'   : 'stats.log',  # Name of log for statistics
+   'LOG_RESULT_FILENAME'  : 'result.log', # Name of log for results acquired from the scanning
+   'NEW_FOLDER_EACH_SCAN' : False,        # True if you want a new folder to be created for each scan
 
-   # Rules from Google
-   'Grules':
+   # Box rules
+   'box':
    {
-      'maxScannableDistance': 50000,        # max radius distance for scanning in m
-      'maxLat': 89,
-      'max_quota_per_day': 1000, # The number of Google Places requests per 24h for non-verified key
-      'cost_textsearch' : 10,
-      'cost_radarsearch': 5,
-      'cost_details'    : 1,
-      'cost_search'     : 1,
+      'MAX_X_DISTANCE'   : 100000,        # max x distance in m
+      'MAX_Y_DISTANCE'   : 100000,        # max x distance in m
    },
-   
-   
+
+   # Costs. This is used as a multiplier for each request
+   'costs':
+   {
+      'PER_REQUEST' :  5, # Cost per request, 5 for Google's radar search
+   },
+
    # Limit the results from scanning
    'limiter':
    {
-      #'bounds':  [85, 10, 0, 65], # Lat, Lng, Lat2, Lng2
-      #'bounds':  [-30, 10.0, 30, 0.0],
-      #'bounds':  [66, 11, 57, 27],  #scandinavia
-      'bounds':  [66, 11, 57, 14],  #norway - sweden
-      #'bounds':  [-10, 0, 75, -0.5],#vertical line
-      #'bounds':  [60, 17, 59, 19], #stockholm 4x4
-      #'bounds':  [60, 17, 57, 19], #stockholm+gotland
-      #'bounds':  [59.5, 17.38, 58.9, 18.7], # Don't scan outside these bounds
-      'country_code': 'se'                   # Scan only inside specific country
+      #'bounds':  (85, 10, 0, 65), # Lat, Lng, Lat2, Lng2
+      #'bounds':  (-30, 10.0, 30, 0.0),
+      #'bounds':  (66, 11, 57, 27),  #scandinavia
+      #'bounds':  (66, 11, 57, 14),  #norway - sweden
+      #'bounds':  (-10, 0, 75, -0.5),#vertical line
+      'BOUNDS':  (60, 17, 59, 19), #stockholm 4x4
+      #'bounds':  (60, 17, 57, 19), #stockholm+gotland
+      #'bounds':  (59.5, 17.38, 58.9, 18.7), # Don't scan outside these bounds
+      'COUNTRY_CODE': 'se',                  # Scan only inside specific country
+      'COUNTRY_CHECK_METHOD': 'NOMINATIM', # Should be either FROMRADARSEARCH or NOMINATIM
    },
-
 
    # Schedule the timings of the scanning
    'scheduler':
    {
-      'next_search_wait'    :  1, # Seconds to wait before going to next box
-      'on_query_limit_wait' :  3, # Seconds to wait when query limit
-      'max_quota_per_day'   : 900 # Stop if quota exceeds this limit
+      'NEXT_SEARCH_WAIT'    :   1, # Seconds to wait before going to next box
+      'ON_QUERY_LIMIT_WAIT' :   3, # Seconds to wait when query limit
    }
-   
+
 }
