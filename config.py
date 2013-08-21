@@ -1,11 +1,11 @@
-# Configuration values for Google Places Plus
+# Configuration values for application
 config={
 
    # Port for GUI
    'GUI_PORT': 9017,
    
    # Key for the service used
-   'SERVICE_KEY': 'AIzaSyCMHNMC8ijFWXQFNrKy5FJ-uYSTZYrdAlM', # String or None
+   'SERVICE_KEY': 'AIzaSyCMHNMC8ijFWXQFNrKy5FJ-uYSTZYrdAlM', # Key for service if needed
 
    # Log files
    'LOG_PATH'             : '/log',

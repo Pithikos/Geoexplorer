@@ -3,6 +3,7 @@ from lxml import etree
 from classes.GUI import *
 from classes.Grid import *
 from classes.Logger import *
+from classes.Service import *
 
 from config import *
 
@@ -14,6 +15,7 @@ class Scanner:
    # Incapsulated objects
    GUI       = None
    logger    = None
+   service = None
    
    # Stats for overall scanning
    scanStartDatetime  = None
@@ -25,11 +27,8 @@ class Scanner:
    # Current box scan
    currentBox         = None
 
-
    # Vars
    bounds    = None    #bounds in latitude and longtitude [x, y, x2, y2]
-
-   for_each_box = None
    
    # ----------------------------------------------
    
@@ -90,7 +89,7 @@ class Scanner:
          self.GUI.remove_box(box)
          self.GUI.add_box(box, 'green')
 
-         markers = self.for_each_box(box) # HERE WE SEARCH BOX
+         markers = self.service.search(box, logger) # HERE WE SEARCH BOX
 
          self.requestsTotal +=1
          self.costTotal += config['costs']['PER_REQUEST']
@@ -112,7 +111,6 @@ class Scanner:
       print("Press CTRL+C to stop application.")
 
 
-
    def stop_scanning(self):
       pass
 
@@ -120,9 +118,5 @@ class Scanner:
    # ----------------- Setters ---------------------
 
  
-   def set_scheduler(self, scheduler):
-      self.scheduler=scheduler
-
-
-   def set_limiter(self, limiter):
-      self.limiter=limiter
+   def set_service(self, service):
+      self.service=service
