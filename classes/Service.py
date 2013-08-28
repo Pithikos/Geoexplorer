@@ -7,8 +7,14 @@ from classes.ResponseParser import *
 # MUST have a 'search' function which takes a 'box' object as parameter
 # MUST return a list of markers(latitude, longitude pairs)
 
+
 # Makes a google radar search for each box
 class GoogleRadarSearch():
+   
+   searchItems=None
+   
+   def __init__(self, searchItems):
+      self.searchItems=searchItems
 
    def search(self, box, logger):
 
@@ -28,11 +34,12 @@ class GoogleRadarSearch():
       # Make the radar search request and send it
       googleRequester=GoogleRequester(logger)
       location=str(box.center[0])+","+str(box.center[1])
-      radius=max(box.xMeters, box.yMeters)/2
-      searchitems={"name": "ica", "types": "grocery_or_supermarket"};
+      radius=max(box.xMeters, box.yMeters)/2  
+      
       req= {'location': location,
             'radius': radius,
-            'searchitems': searchitems}
+            'searchitems': self.searchItems}
+      
       googleResponse = googleRequester.send_request(req, 0, 0)
       logger.append('scan', str(box.bounds())+" : "+googleResponse.status)
    

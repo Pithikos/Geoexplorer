@@ -10,7 +10,7 @@ class GoogleRequester():
 
    # Returns status of response
    def __init__(self, logger):
-      G_set_key(config["SERVICE_KEY"])
+      G_set_key(config['service']['KEY'])
       self.logger=logger
 
    def send_request(self, request, maxRetries, retryInterval):

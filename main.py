@@ -7,7 +7,6 @@ import datetime
 from classes.Scanner   import *
 from classes.GUI import *
 
-import webbrowser
 
 # Configs
 from config import *
@@ -46,10 +45,15 @@ scanner=Scanner(GUI)
 scanner.set_bounds(config['limiter']['BOUNDS'])
 print("Scanning area set to: ", scanner.bounds)
 
-
 # Set service for the scanner
-service = GoogleRadarSearch()
+# ================= OWN CODE HERE ======================
+
+searchitems={"name": "ica", "types": "grocery_or_supermarket"};
+service = GoogleRadarSearch(searchitems)
 scanner.set_service(service)
+
+# ======================================================
+
 
 # Start scanning
 scanner.start_scanning()

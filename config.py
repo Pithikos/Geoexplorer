@@ -3,9 +3,6 @@ config={
 
    # Port for GUI
    'GUI_PORT': 9017,
-   
-   # Key for the service used
-   'SERVICE_KEY': 'AIzaSyCMHNMC8ijFWXQFNrKy5FJ-uYSTZYrdAlM', # Key for service if needed
 
    # Log files
    'LOG_PATH'             : '/log',
@@ -13,6 +10,12 @@ config={
    'LOG_STATS_FILENAME'   : 'stats.log',  # Name of log for statistics
    'LOG_RESULT_FILENAME'  : 'result.log', # Name of log for results acquired from the scanning
    'NEW_FOLDER_EACH_SCAN' : False,        # True if you want a new folder to be created for each scan
+
+   # Service
+   'service':
+   {
+      'KEY'       : 'AIzaSyCMHNMC8ijFWXQFNrKy5FJ-uYSTZYrdAlM', # if needed by the service
+   },
 
    # Box rules
    'box':
