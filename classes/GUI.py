@@ -10,10 +10,6 @@ class GUI:
       self.messenger=messenger
 
 
-   def init_index():
-      pass
-
-
    def add_box(self, box, color):
       lat1=box.WN[0]
       lng1=box.WN[1]

@@ -1,15 +1,23 @@
-============================== GOOGLE PLACES PLUS  =============================
+================================= GEOEXPLORER  =================================
 
 Author: Johan Hanssen Seferidis
 Created: 2013-06-20
-Updated: 2013-07-16
+Updated: 2013-12-01
 
-Description: Google Places Plus let's you use Google Places for a wider area
+Description: Geoexplorer is a framework for geographic services that let your
+             bypass many of the service's limitations like the topology. It
+             further lets you log everything and see how the service acts visua-
+             lly.
 
 
 ==================================== Usage  ====================================
 
-1. Make sure that the Google key in the configuration
-   corresponds to your own key.
-2. Run: python -B main.py
-3. Open ./GUI/index.html with a webbrowser
+1. Enter /examples
+2. Run python3 <example>.py
+3. Open /GUI/index.html with a webbrowser
+
+A log directory will be created on success with the log
+files. The log files are being updated on-the-fly.
+
+IMPORTANT:
+Some services require a key. You can enter the service key in the config.py file.

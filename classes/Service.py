@@ -10,9 +10,9 @@ from classes.ResponseParser import *
 
 # Makes a google radar search for each box
 class GoogleRadarSearch():
-   
+
    searchItems=None
-   
+
    def __init__(self, searchItems):
       self.searchItems=searchItems
 

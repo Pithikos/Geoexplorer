@@ -7,7 +7,7 @@ from config import *
 class Logger:
    
    scanner = None # Let's logger access all scanner's information
-   
+
    fScan   = None # Keeps track of each step in the scanning process
    fStats  = None # Keeps track of google quota for each scan
    fResult = None # Makes a record of the findings from the scan

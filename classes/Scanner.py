@@ -7,15 +7,16 @@ from classes.Service import *
 
 from config import *
 
+from threading import Thread # Needed for Messenger
 from time import sleep
 import datetime
 
 class Scanner:
    
    # Incapsulated objects
-   GUI       = None
-   logger    = None
-   service = None
+   GUI      = None
+   logger   = None
+   service  = None
    
    # Stats for overall scanning
    scanStartDatetime  = None
@@ -30,13 +31,26 @@ class Scanner:
    # Vars
    bounds    = None    #bounds in latitude and longtitude [x, y, x2, y2]
    
-   # ----------------------------------------------
+   
+   # ---------------------------------------------------------------------------
    
    
    # GUI  -> GUI object
    # Gkey -> Google key
-   def __init__(self, GUI):
-      self.GUI    = GUI
+   def __init__(self):
+
+      # Make Messenger
+      msn = Messenger('', config['GUI_PORT'])
+      msn.setHandler(self.incoming_msg_handler)
+      Thread(target=msn.start_server).start()
+      
+      # GUI
+      self.GUI    = GUI(msn)
+      
+      # Bounds
+      self.set_bounds(config['limiter']['BOUNDS'])
+      print("Scanning area set to: ", self.bounds)
+      
       self.logger = Logger('.'+config['LOG_PATH'],
                            config['LOG_SCAN_FILENAME'],
                            config['LOG_STATS_FILENAME'],
@@ -65,8 +79,20 @@ class Scanner:
    def set_response_handler(self, func):
       self.response_handler=func
       
-   # ----------------------------------------------------------------------------------------------
 
+   # ---------------------------------------------------------------------------
+
+
+   # Handling incoming messages from GUI
+   def incoming_msg_handler(self, msg):
+      if (msg == "PAUSE"):
+         print("Client asks to pause application")
+      elif (msg == "CLOSE"):
+         print("Client asks to close application")
+        
+               
+   # ---------------------------------------------------------------------------
+   
 
    # Start scanning
    def start_scanning(self):
@@ -117,6 +143,6 @@ class Scanner:
 
    # ----------------- Setters ---------------------
 
- 
+
    def set_service(self, service):
       self.service=service

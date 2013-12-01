@@ -49,7 +49,7 @@ config={
    'scheduler':
    {
       'NEXT_SEARCH_WAIT'    :   1, # Seconds to wait before going to next box
-      'ON_QUERY_LIMIT_WAIT' :   3, # Seconds to wait when query limit
+      'ON_QUERY_LIMIT_WAIT' :   3, # Seconds to wait when service hits query limit
    }
 
 }
