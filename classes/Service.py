@@ -14,15 +14,12 @@ class GoogleRadarSearch():
    searchItems = None
    
    # Override config values if neccesary
-   ''''box':
-   {
-      'MAX_X_DISTANCE'   : 100000,
-      'MAX_Y_DISTANCE'   : 100000
-   }'''
-   '''   'costs':
-   'PER_REQUEST' :  5 # This is static for radar search
-   '''
-
+   def override_config(self, scanner):
+      if scanner.config['box']['MAX_X_DISTANCE'] > 100000:
+         scanner.config['box']['MAX_X_DISTANCE'] = 100000  # 50km max radius
+      if scanner.config['box']['MAX_Y_DISTANCE'] > 100000:
+         scanner.config['box']['MAX_Y_DISTANCE'] = 100000  # 50km max radius
+      scanner.config['costs']['PER_REQUEST'] = 5             # 5 cost per google radar
 
    def __init__(self, key, searchItems):
       self.searchItems=searchItems

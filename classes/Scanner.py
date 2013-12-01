@@ -17,6 +17,7 @@ class Scanner:
    GUI      = None
    logger   = None
    service  = None
+   config   = None
    
    # Stats for overall scanning
    scanStartDatetime  = None
@@ -35,12 +36,13 @@ class Scanner:
    # ---------------------------------------------------------------------------
    
    
-   # GUI  -> GUI object
-   # Gkey -> Google key
    def __init__(self):
+      
+      # Load configuration file
+      self.config=config
 
       # Make Messenger
-      msn = Messenger('', config['GUI_PORT'])
+      msn = Messenger('', self.config['GUI_PORT'])
       msn.setHandler(self.incoming_msg_handler)
       Thread(target=msn.start_server).start()
       
@@ -48,15 +50,14 @@ class Scanner:
       self.GUI    = GUI(msn)
       
       # Bounds
-      self.set_bounds(config['limiter']['BOUNDS'])
+      self.set_bounds(self.config['limiter']['BOUNDS'])
       print("Scanning area set to: ", self.bounds)
       
-      self.logger = Logger('.'+config['LOG_PATH'],
-                           config['LOG_SCAN_FILENAME'],
-                           config['LOG_STATS_FILENAME'],
-                           config['LOG_RESULT_FILENAME'],
+      self.logger = Logger('.'+self.config['LOG_PATH'],
+                           self.config['LOG_SCAN_FILENAME'],
+                           self.config['LOG_STATS_FILENAME'],
+                           self.config['LOG_RESULT_FILENAME'],
                            self)
-
 
    # Set outer bounds for the scanning
    def set_bounds(self, bounds):
@@ -100,7 +101,7 @@ class Scanner:
       logger=self.logger
 
       # Make a grid of scannable boxes
-      grid=Grid(self.bounds) 
+      grid=Grid(self.bounds, self) 
       self.GUI.add_grid(grid)
       self.boxesN=len(grid.boxes)
       print("Number of boxes to scan: ", self.boxesN)
@@ -111,14 +112,14 @@ class Scanner:
       while(toScan):
          box=toScan[0]
          self.currentBox=box
-         sleep(config['scheduler']['NEXT_SEARCH_WAIT'])
+         sleep(self.config['scheduler']['NEXT_SEARCH_WAIT'])
          self.GUI.remove_box(box)
          self.GUI.add_box(box, 'green')
 
          markers = self.service.search(box, logger) # HERE WE SEARCH BOX
 
          self.requestsTotal +=1
-         self.costTotal += config['costs']['PER_REQUEST']
+         self.costTotal += self.config['costs']['PER_REQUEST']
          logger.update_stats()
 
          # Add marker on map

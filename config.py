@@ -14,14 +14,14 @@ config={
    # Box rules
    'box':
    {
-      'MAX_X_DISTANCE'   : 100000,  # max x distance in m. This should be max the distance that the service permits
-      'MAX_Y_DISTANCE'   : 100000,  # max x distance in m. This should be max the distance that the service permits
+      'MAX_X_DISTANCE'   : 100000,  # max x distance in m.
+      'MAX_Y_DISTANCE'   : 100000,  # max x distance in m.
    },
 
-   # Costs. This is used as a multiplier for each request
+   # Costs
    'costs':
    {
-      'PER_REQUEST' :  5, # Cost per request, 5 for Google's radar search
+      'PER_REQUEST' :  1, # Overriden by some services
    },
 
    # Limit the results from scanning
