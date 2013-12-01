@@ -10,14 +10,50 @@ Description: Geoexplorer is a framework for geographic services that let your
              lly.
 
 
+
 ==================================== Usage  ====================================
 
 1. Enter /examples
 2. Run python3 <example>.py
 3. Open /GUI/index.html with a webbrowser
 
-A log directory will be created on success with the log
+A log directory will be created with the log
 files. The log files are being updated on-the-fly.
 
-IMPORTANT:
-Some services require a key. You can enter the service key in the config.py file.
+
+
+================================ Configuration  ================================
+
+The config.py keeps all the applicable options for Geoexplorer in a single file.
+Each option is described bellow:
+
+
+      GUI_PORT             -> Port being used for the communication with the GUI
+      
+      LOG_PATH             -> Folder name where logs should be stored
+      LOG_SCAN_FILENAME    -> Name of file for logging scanning 
+      LOG_STATS_FILENAME   -> Name of file for logging statistics fom each scan
+      LOG_RESULT_FILENAME  -> Name of file for logging the results from each box
+      NEW_FOLDER_EACH_SCAN -> Should a new folder be created on each new scan?
+      
+      'box'
+      MAX_X_DISTANCE       -> Max distance in m. for a box' x axis
+      MAX_Y_DISTANCE       -> Max distance in m. for a box' y axis
+      
+      'costs':
+      PER_REQUEST          -> This is used by some services for statistical data.
+      
+      'limiter':
+      BOUNDS               -> The coordinates lat, lng, lat2, lng2 for scanning. 
+      COUNTRY_CODE         -> Scan only inside specific country
+      COUNTRY_CHECK_METHOD -> Should be either FROMRADARSEARCH or NOMINATIM
+      
+      'scheduler'
+      NEXT_SEARCH_WAIT     -> Seconds to wait before going to next box
+      ON_QUERY_LIMIT_WAIT  -> Seconds to wait when service hits query limit
+
+
+
+--------------------------------------------
+scan = starting-scanning-closing the program
+box  = each visible box on the GUI map

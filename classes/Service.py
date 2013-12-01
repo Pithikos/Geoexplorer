@@ -3,18 +3,30 @@ from lib.geotools import *
 from classes.Requester import *
 from classes.ResponseParser import *
 
-#Guidelines for every service:
-# MUST have a 'search' function which takes a 'box' object as parameter
-# MUST return a list of markers(latitude, longitude pairs)
+# Guidelines for every service:
+#   MUST have a 'search' function which takes a 'box' object as parameter
+#   MUST return a list of markers(latitude, longitude pairs)
 
 
 # Makes a google radar search for each box
 class GoogleRadarSearch():
 
-   searchItems=None
+   searchItems = None
+   
+   # Override config values if neccesary
+   ''''box':
+   {
+      'MAX_X_DISTANCE'   : 100000,
+      'MAX_Y_DISTANCE'   : 100000
+   }'''
+   '''   'costs':
+   'PER_REQUEST' :  5 # This is static for radar search
+   '''
 
-   def __init__(self, searchItems):
+
+   def __init__(self, key, searchItems):
       self.searchItems=searchItems
+      G_set_key(key)
 
    def search(self, box, logger):
 
