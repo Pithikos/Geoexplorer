@@ -56,6 +56,7 @@ class GoogleRadarSearch():
       markers=[]
       for result in googleResponse.results:
          markers.append(result['location'])
+         print(result['location'])
       logger.append("result", str(box.bounds())+" : "+str(googleResponse.resultsN))
    
       return markers
