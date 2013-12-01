@@ -17,8 +17,8 @@ class Logger:
       self.scanner=scanner
       if (config['NEW_FOLDER_EACH_SCAN'] == True):
          logpath+= '/' + datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
-         if not os.path.exists(logpath):
-            os.makedirs(logpath)
+      if not os.path.exists(logpath):
+         os.makedirs(logpath)
             
       scanpath   = logpath + '/' +   scanfile
       statspath  = logpath + '/' +  statsfile
