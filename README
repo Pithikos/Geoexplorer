@@ -11,8 +11,26 @@ Description: Geoexplorer is a framework for geographic services that let your
 
 
 
-==================================== Usage  ====================================
+============================= Install dependencies =============================
 
+Ubuntu 13.10:
+Works out of the box
+
+Ubuntu 12.04:
+sudo apt-get install python3 python3-lxml
+
+Windows 7:
+1. Download and install python3.2 from http://www.python.org/download/releases/python3.2.5
+2. Edit windows path:
+   a. Control Panel -> System -> Advanced system settings
+   b. Click the Environment variables... button
+   c. Edit PATH and append ;C:\python32\
+3. Install the lxml3.2.3 from http://pypi.python.org/pypi/lxml/3.2.4
+
+
+==================================== Usage =====================================
+
+Running some examples:
 1. Enter /examples
 2. Run python3 <example>.py
 3. Open /GUI/index.html with a webbrowser
@@ -22,7 +40,7 @@ files. The log files are being updated on-the-fly.
 
 
 
-================================ Configuration  ================================
+================================ Configuration =================================
 
 The config.py keeps all the applicable options for Geoexplorer in a single file.
 Each option is described bellow:
@@ -54,6 +72,8 @@ Each option is described bellow:
 
 
 
---------------------------------------------
-scan = starting-scanning-closing the program
-box  = each visible box on the GUI map
+=============================== Troubleshooting ================================
+
+The map in the GUI doesn't show any boxes.
+A. Try to install the latest firefox web browser. The program will not work
+   for old browsers(IE8 for example).
