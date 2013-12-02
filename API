@@ -8,12 +8,14 @@ Description: This document contains the API used for adding services to Geoexplo
 
 
 
+
 ==================================== Intro  ====================================
 
 All services can be found at /classes/Service
 
 Each service that uses network communication, will additionally need an entry
 in /classes/Requester and /classes/ResponseParser
+
 
 
 
@@ -33,6 +35,7 @@ For each box on the map, search will be called. The object box gives the user
 access to the specific area. The object logger is merely used in case logging
 is wished to be added for the service. The interface for these objects are
 provided bellow.
+
 
 
 
@@ -62,3 +65,19 @@ Methods:
 Methods:
 	append(type, txt)	→ Appends txt to file specified by type
                        type is a string: scan or result
+
+
+
+
+=============================== Gettools Library ===============================
+
+In /lib/geotools.py some tools can be found that can be used to assist in the
+development for a new service. This module is included in Service.py so you can
+use the following functions directly inside your new service.
+
+   dist(lat1, lon1, lat2, lon2) → Gives the distance between two geographical
+                                  points in meters
+   middleLat(lat1, lat2)	     → Gives the middle latitude between two latitudes
+   middleLng(lng1, lng2)	     → Gives the middle longitude between two longitudes
+   getCountryCode(lat, lng):    → Gives the country code at specific coordinates.
+                                  Return can be: 'UNKNOWN'', <country_code> or None
