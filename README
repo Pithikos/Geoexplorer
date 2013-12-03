@@ -25,7 +25,7 @@ Windows 7:
    a. Control Panel -> System -> Advanced system settings
    b. Click the Environment variables... button
    c. Edit PATH and append ;C:\python32\
-3. Install the lxml3.2.3 from http://pypi.python.org/pypi/lxml/3.2.4
+3. Install the lxml3.2 from http://pypi.python.org/pypi/lxml/3.2.4
 
 
 ==================================== Usage =====================================
