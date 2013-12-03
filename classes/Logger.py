@@ -25,21 +25,13 @@ class Logger:
       resultpath = logpath + '/' + resultfile
       
       # Remove old files
-      try:
-         with open(scanpath):
-            remove(scanpath)
-      except IOError:
-         pass
-      try:
-         with open(statspath):
-            remove(statspath)
-      except IOError:
-         pass
-      try:
-         with open(resultpath):
-            remove(resultpath)
-      except IOError:
-         pass
+      if os.path.isfile(scanpath):
+         remove(scanpath)
+      if os.path.isfile(statspath):
+         remove(statspath)
+      if os.path.isfile(resultpath):
+         remove(resultpath)
+
       self.fScan=open(scanpath, "a", 1)
       self.fStats=open(statspath, "w", 1)
       self.fResult=open(resultpath, "a", 1)
