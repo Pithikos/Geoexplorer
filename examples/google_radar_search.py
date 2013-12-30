@@ -1,5 +1,7 @@
 import _bootstrap_
+
 from classes.Scanner import *
+from classes.services.GoogleRadarSearch import *
 
 #
 # In this example we will use the google radar search service
