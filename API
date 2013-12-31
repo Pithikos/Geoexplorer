@@ -31,8 +31,9 @@ class MyService:
 markers is just a list of tupples in the form (latitute, longitude)
 
 For each box on the map, search will be called. The object box gives the user
-access to the specific area. The object logger is merely used in case logging
-is wished to be added for the service. The interface for these objects are
+access to the specific area.
+
+The object logger is used for logging. Two functions is wished to be added for the service. The interface for these objects are
 provided bellow.
 
 
@@ -76,13 +77,13 @@ Methods:
 ---- Logger object----
 
 Methods:
-        append(type, txt) →  Appends txt to file specified by type:
-                             type - a string: type of log file (scan* or result**)
-                             txt  - a string: the message to append  
-
-scan* is used for appending a message that has to do with the search for this box.
-result** is used for appending each marker and other info connected to the
-         marker that you might want.
+        log_result(line)  →  Appends a line to the result log file. This should
+                             be used to log information about the scanning of 
+                             a box.
+        log_scan(line)    →  Appends a line to the scan log file. This should
+                             be used for each marker to save the marker's position
+                             and/or other interesting information that you want
+                             to save.
 
 
 

@@ -33,13 +33,13 @@ class GoogleRadarSearch():
             'searchitems': self.searchItems}
       
       googleResponse = googleRequester.send_request(req, 0, 0)
-      logger.append('scan', str(box.bounds())+" : "+googleResponse.status)
+      logger.log_scan(str(box.bounds())+" : "+googleResponse.status)
    
       # Get the markers from the response
       markers=[]
       for result in googleResponse.results:
          markers.append(result['location'])
-      logger.append("result", str(box.bounds())+" : "+str(googleResponse.resultsN))
+         logger.log_result(str(result['location'])+" : "+str(googleResponse.resultsN)+" results")
    
       return markers
 

@@ -50,8 +50,8 @@ Each option is described bellow:
       GUI_PORT             -> Port being used for the communication with the GUI
       
       LOG_PATH             -> Folder name where logs should be stored
-      LOG_SCAN_FILENAME    -> Name of file for logging scanning 
-      LOG_STATS_FILENAME   -> Name of file for logging statistics fom each scan
+      LOG_SCAN_FILENAME    -> Name of file for logging of each box scan 
+      LOG_STATS_FILENAME   -> Name of file for logging statistics fom each scanning session
       LOG_RESULT_FILENAME  -> Name of file for logging the results from each box
       NEW_FOLDER_EACH_SCAN -> Should a new folder be created on each new scan?
       
@@ -70,8 +70,19 @@ Each option is described bellow:
       ON_QUERY_LIMIT_WAIT  -> Seconds to wait when service hits query limit
 
 
-NOTICE: Some options in the configuration are overriden by some services. Thus
-        changing these options in the config file might have no effect.
+NOTICE: If the values for an option is above of what a service allowes, it will
+        be overriden by the service's default value.
+
+
+
+=================================== Logging ====================================
+
+There are three files for logging different things.
+
+STATS:  Logging for the whole session
+SCAN:   Logging for each box
+RESULT: Logging for each box result (this will be essentially all the results
+        summed up)
 
 
 
