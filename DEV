@@ -10,8 +10,7 @@ classes
   Scanner.py        -> Scans a given area
   GUI.py            -> Used for the web GUI
   Logger.py         -> Logs history, messages, responses, etc.
-  Requester.py      -> Makes a request for every box
-  ResponseParser.py -> Parses the response from a request made for each box
+  services/         -> Contains every service that can be used
 
 examples
   _bootstrap_.py    -> A file used to make it available running the examples

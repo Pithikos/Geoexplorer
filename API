@@ -8,14 +8,13 @@ Description: This document contains the API used for adding services to Geoexplo
 
 
 
-
 ==================================== Intro  ====================================
 
-All services can be found at /classes/Service
+All services can be found at directory /classes/services
 
-Each service that uses network communication, will additionally need an entry
-in /classes/Requester and /classes/ResponseParser
-
+Each service should have a descriptive name, and if possible be the name of the
+actual service. For example GoogleRadarSearch is used for the Radar Search service
+provided by Google.
 
 
 
@@ -23,10 +22,10 @@ in /classes/Requester and /classes/ResponseParser
 
 Each service should follow the following blueprint:
 
-class myService:
-   def search(box, logger):
+class MyService:
+   def search(self, box, logger):
       markers=[]
-      markers.append(('59.3649300', '17.9940050'))
+      # Populate the markers here
       return markers
 
 markers is just a list of tupples in the form (latitute, longitude)
@@ -38,34 +37,37 @@ provided bellow.
 
 
 
-
 ============================== Objects' Interface  =============================
 
 ---- Box object----
 
 Properties:
-	N                 →  Coordinates of north of the box
-	E                 →  Coordinates of east of the box
-	S                 →  Coordinates of south of the box
-	W                 →  Coordinates of west of the box
-	center            →  Coordinates of center of the box
-	WN                →  Coordinates of west-north of the box
-	NE                →  Coordinates of north-east of the box
-	WS                →  Coordinates of west-south of the box
-	SE                →  Coordinates of south-east of the box
-	xMeters           →  Length of the horizontal side of the box in meters
-	yMeters           →  Length of the vertical side of the box in meters
+        N                 →  Coordinates of north of the box
+        E                 →  Coordinates of east of the box
+        S                 →  Coordinates of south of the box
+        W                 →  Coordinates of west of the box
+        center            →  Coordinates of center of the box
+        WN                →  Coordinates of west-north of the box
+        NE                →  Coordinates of north-east of the box
+        WS                →  Coordinates of west-south of the box
+        SE                →  Coordinates of south-east of the box
+        xMeters           →  Length of the horizontal side of the box in meters
+        yMeters           →  Length of the vertical side of the box in meters
    
 Methods:
-	bounds()	         →  Gives the bounds of the box
+        bounds()          →  Gives the bounds of the box
    
 
 ---- Logger object----
 
 Methods:
-	append(type, txt)	→  Appends txt to file specified by type
-                        type is a string: scan or result
+        append(type, txt) →  Appends txt to file specified by type:
+                             type - a string: type of log file (scan* or result**)
+                             txt  - a string: the message to append  
 
+scan* is used for appending a message that has to do with the search for this box.
+result** is used for appending each marker and other info connected to the
+         marker that you might want.
 
 
 
@@ -81,3 +83,4 @@ use the following functions directly inside your new service.
    middleLng(lng1, lng2)	     → Gives the middle longitude between two longitudes
    getCountryCode(lat, lng):    → Gives the country code at specific coordinates.
                                   Return can be: 'UNKNOWN'', <country_code> or None
+

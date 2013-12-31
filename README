@@ -28,6 +28,7 @@ Windows 7:
 3. Install the lxml3.2 from http://pypi.python.org/pypi/lxml/3.2.4
 
 
+
 ==================================== Usage =====================================
 
 Running some examples:
@@ -63,17 +64,21 @@ Each option is described bellow:
       
       'limiter':
       BOUNDS               -> The coordinates lat, lng, lat2, lng2 for scanning. 
-      COUNTRY_CODE         -> Scan only inside specific country
-      COUNTRY_CHECK_METHOD -> Should be either FROMRADARSEARCH or NOMINATIM
       
       'scheduler'
       NEXT_SEARCH_WAIT     -> Seconds to wait before going to next box
       ON_QUERY_LIMIT_WAIT  -> Seconds to wait when service hits query limit
 
 
+NOTICE: Some options in the configuration are overriden by some services. Thus
+        changing these options in the config file might have no effect.
+
+
 
 =============================== Troubleshooting ================================
 
 The map in the GUI doesn't show any boxes.
-A. Try to install the latest firefox web browser. The program will not work
+A. Try to install the latest firefox web browser. The GUI will not work
    for old browsers(IE8 for example).
+
+
