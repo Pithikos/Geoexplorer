@@ -1,0 +1,8 @@
+================================== To-do List ==================================
+
+* Autosplit box once maximum results are given from a box scan. For this, a new
+  entry in the config has to be added
+* Change the design of the services a bit so development is easier:
+  - logger.log_scan could be automated so user doesn't need to handle it
+  - use a set of properties for a service. These "rules" are essentially
+    the constrains of the service.
