@@ -33,12 +33,13 @@ markers is just a list of tupples in the form (latitute, longitude)
 For each box on the map, search will be called. The object box gives the user
 access to the specific area.
 
-The object logger is used for logging. Two functions is wished to be added for the service. The interface for these objects are
-provided bellow.
+The object logger is used for logging. Two functions are used for this: log_scan()
+and log_result(). More information is provided bellow.
 
 
 
 ============================== Configuration file  =============================
+
 The configuration file can be used by importing it like this:
 from config import *
 
