@@ -1,6 +1,5 @@
 import datetime
 
-from os import remove
 import os
 from config import *
 
@@ -26,15 +25,15 @@ class Logger:
       
       # Remove old files
       if os.path.isfile(scanpath):
-         remove(scanpath)
+         os.remove(scanpath)
       if os.path.isfile(statspath):
-         remove(statspath)
+         os.remove(statspath)
       if os.path.isfile(resultpath):
-         remove(resultpath)
+         os.remove(resultpath)
 
-      self.fScan=open(scanpath, "a", 1)
-      self.fStats=open(statspath, "w", 1)
-      self.fResult=open(resultpath, "a", 1)
+      self.fScan   = open(scanpath,   "a", 1)
+      self.fStats  = open(statspath,  "w", 1)
+      self.fResult = open(resultpath, "a", 1)
 
 
    # Append text as a new line to a log file
@@ -45,6 +44,16 @@ class Logger:
       elif (type=='result'):
          self.fResult.write(text+"\n")
 
+
+   # Append a new result to the results log file
+   def log_result(self, line):
+      self.append("result", line);
+
+
+   # Append a new result to the results log file
+   def log_scan(self, line):
+      self.append("scan", line);
+      
 
    # Make Google statistics log while erasing the previous one
    def update_stats(self):
