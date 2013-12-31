@@ -10,7 +10,7 @@ config={
    'LOG_SCAN_FILENAME'    : 'scan.log',   # Name of log for the scanning process
    'LOG_STATS_FILENAME'   : 'stats.log',  # Name of log for statistics
    'LOG_RESULT_FILENAME'  : 'result.log', # Name of log for results acquired from the scanning
-   'NEW_FOLDER_EACH_SCAN' : False,        # True if you want a new folder to be created for each scan
+   'NEW_FOLDER_EACH_SCAN' : False,        # True if you want a new folder to be created for each scanning session
 
    # Box rules
    'box':

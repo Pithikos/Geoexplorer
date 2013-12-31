@@ -13,8 +13,8 @@ Description: This document contains the API used for adding services to Geoexplo
 All services can be found at directory /classes/services
 
 Each service should have a descriptive name, and if possible be the name of the
-actual service. For example GoogleRadarSearch is used for the Radar Search service
-provided by Google.
+actual service. For example GoogleRadarSearch is the name used for the 
+Radar Search service provided by Google.
 
 
 
@@ -34,6 +34,21 @@ For each box on the map, search will be called. The object box gives the user
 access to the specific area. The object logger is merely used in case logging
 is wished to be added for the service. The interface for these objects are
 provided bellow.
+
+
+
+============================== Configuration file  =============================
+The configuration file can be used by importing it like this:
+from config import *
+
+In most cases the configuration file should be used to read the 'scheduler' and
+override some values for the box size in case the service has some constrains on
+that.
+
+From the 'scheduler' the values should be used in conjunction with the function
+sleep(). For example if you want to allow your service to retry a search on fail,
+then you should make your program to sleep for as much time as given in
+config['scheduler']['NEXT_SEARCH_WAIT']
 
 
 
@@ -83,4 +98,5 @@ use the following functions directly inside your new service.
    middleLng(lng1, lng2)	     → Gives the middle longitude between two longitudes
    getCountryCode(lat, lng):    → Gives the country code at specific coordinates.
                                   Return can be: 'UNKNOWN'', <country_code> or None
+
 
