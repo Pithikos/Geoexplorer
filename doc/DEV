@@ -1,4 +1,17 @@
------------------------------ File structure -----------------------------------
+===================================== DEV =====================================
+
+This document is meant to be used for the development of the whole program.
+Some key ideas are pinpointed to make it easier to track pitfalls on extending
+the program or to find errors.
+
+
+For documentation on how to add a service to the program, read the API file
+instead.
+
+
+
+
+------------------------------- File structure --------------------------------
 
 lib
   google_places.py  -> Google Places service API (radarSearch, textSearch, etc)
@@ -8,41 +21,66 @@ lib
 classes
   Grid              -> Keeps the structure for the search area
   Scanner.py        -> Scans a given area
-  GUI.py            -> Used for the web GUI
+  GUI.py            -> Used for the web GUI, it contains the Messenger
   Logger.py         -> Logs history, messages, responses, etc.
   services/         -> Contains every service that can be used
+    *.py            -> Every single file is a service
 
 examples
   _bootstrap_.py    -> A file used to make it available running the examples
   *.py              -> Each example is demonstrating a function or service
+  
+GUI
+  index.html        -> The Graphical Interface of the program
+  js/
+    init.js         -> Things to be loaded
+    maptoolbox.js   -> Graphical elements that can be added to the map
+    messenger.js    -> The Messenger object that communicates with the main program
+    websock.js      -> This is the websocket library and other things needed by it
+  style/
+    default.css     -> The CSS file
 
 config.py           -> Keeps configuration for application
 
 
 
 
---------------------------------- Design ---------------------------------------
-
+----------------------------------- Story -------------------------------------
                            _________
 config -----------------> |         | --------> GUI
 service ----------------> | Scanner |
                           |_________| ----.
                                           '---> Logger
 
--- Threads
+The config is being read. If needed, some values will be overriden by the
+service.
+
+The GUI can be run live, or whenever as long as the main program has not exited.
+
+
+
+
+----------------------------------- Design ------------------------------------
+
+----- Treads -----
 Scanner ↔ Messenger ↔ GUI
    1          2        3
 
-The GUI runs on its own thread. The same applies to the Scanner and
-the Scanner's Messenger.
+The GUI runs on its own thread as it essentialy runs on the browser.
+The Scanner and the Scanner's Messenger run on their own thread as well.
+The reason for this is to have full-duplex communication between GUI and
+application without the GUI lagging the whole process and vice versa.
 
 
--- Scanner/Gui communication
+----- Scanner/Gui communication -----
 Scanner     GUI
 Messenger ↔ Messenger
 
 The communication is being made by a messenger object in both ends.
 
 
--- From application to GUI
+----- From application to GUI -----
 Scanner  ↔  GUI  ↔  Messenger  ↔  Websockets  ↔  JavaScript
+
+
+
