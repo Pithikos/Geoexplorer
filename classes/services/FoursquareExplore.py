@@ -1,5 +1,4 @@
-from lib.google_places import *
-
+from urllib.request import urlopen
 from lxml import etree
 from time import sleep
 import json
