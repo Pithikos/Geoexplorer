@@ -14,8 +14,8 @@ class Grid:
    # Creates a rectangle grid between two points
    def __init__(self, bounds, scanner):
       
-      self.maxBoxX = scanner.config['box']['MAX_X_DISTANCE']
-      self.maxBoxY = scanner.config['box']['MAX_Y_DISTANCE']
+      self.maxBoxX = scanner.config['box']['X_DISTANCE']
+      self.maxBoxY = scanner.config['box']['Y_DISTANCE']
       
       box=Box(bounds)
       self.boxes.append(box)

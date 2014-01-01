@@ -2,7 +2,6 @@
 
 Author: Johan Hanssen Seferidis
 Created: 2013-06-20
-Updated: 2013-12-01
 
 Description: Geoexplorer is a framework for geographic services that let your
              bypass many of the service's limitations like the topology. It
@@ -46,7 +45,6 @@ files. The log files are being updated on-the-fly.
 The config.py keeps all the applicable options for Geoexplorer in a single file.
 Each option is described bellow:
 
-
       GUI_PORT             -> Port being used for the communication with the GUI
       
       LOG_PATH             -> Folder name where logs should be stored
@@ -55,23 +53,18 @@ Each option is described bellow:
       LOG_RESULT_FILENAME  -> Name of file for logging the results from each box
       NEW_FOLDER_EACH_SCAN -> Should a new folder be created on each new scan?
       
-      'box'
-      MAX_X_DISTANCE       -> Max distance in m. for a box' x axis
-      MAX_Y_DISTANCE       -> Max distance in m. for a box' y axis
-      
-      'costs':
-      PER_REQUEST          -> This is used by some services for statistical data.
-      
-      'limiter':
       BOUNDS               -> The coordinates lat, lng, lat2, lng2 for scanning. 
       
+      'box'
+      X_DISTANCE           -> Desirable distance in m. for a box' x axis
+      Y_DISTANCE           -> Desirable distance in m. for a box' y axis
+
       'scheduler'
       NEXT_SEARCH_WAIT     -> Seconds to wait before going to next box
       ON_QUERY_LIMIT_WAIT  -> Seconds to wait when service hits query limit
 
-
-NOTICE: If the values for an option is above of what a service allowes, it will
-        be overriden by the service's default value.
+The 'service' entry is used as a template by the services and should not
+be altered.
 
 
 

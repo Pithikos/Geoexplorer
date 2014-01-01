@@ -8,15 +8,17 @@ from config import *
 
 from threading import Thread # Needed for Messenger
 from time import sleep
+from sys import exit
 import datetime
 
 class Scanner:
    
    # Incapsulated objects
-   GUI      = None
-   logger   = None
-   service  = None
-   config   = None
+   GUI       = None
+   logger    = None
+   service   = None
+   config    = None
+   msnThread = None
    
    # Stats for overall scanning
    scanStartDatetime  = None
@@ -43,13 +45,14 @@ class Scanner:
       # Make Messenger
       msn = Messenger('', self.config['GUI_PORT'])
       msn.setHandler(self.incoming_msg_handler)
-      Thread(target=msn.start_server).start()
+      self.msnThread = Thread(target=msn.start_server)
+      self.msnThread.start()
       
       # GUI
       self.GUI    = GUI(msn)
       
       # Bounds
-      self.set_bounds(self.config['limiter']['BOUNDS'])
+      self.set_bounds(self.config['SCANNING_AREA'])
       print("Scanning area set to: ", self.bounds)
       
       self.logger = Logger('.'+self.config['LOG_PATH'],
@@ -105,7 +108,7 @@ class Scanner:
       self.boxesN=len(grid.boxes)
       print("Number of boxes to scan: ", self.boxesN)
 
-      # Search for each box
+      # Scan each box
       toScan=list(grid.boxes)
       consequentReqRetries=0
       while(toScan):
@@ -116,10 +119,17 @@ class Scanner:
          self.GUI.add_box(box, 'green')
 
          markers = self.service.search(box, logger) # HERE WE SEARCH BOX
+         max_results = self.config['service']['response']['MAX_RESULTS']
+         if max_results!='INF' and len(markers) >= max_results:
+            print("response has max results")
 
          self.requestsTotal +=1
-         self.costTotal += self.config['costs']['PER_REQUEST']
+         self.costTotal += self.config['service']['request']['COST_PER_REQUEST']
          logger.update_stats()
+
+         max_cost_day = self.config['service']['request']['MAX_COST_DAY']
+         if max_cost_day!='INF' and self.costTotal > max_cost_day:
+            print("max cost per day reached")
 
          # Add marker on map
          for marker in markers:
@@ -143,6 +153,40 @@ class Scanner:
 
    # ----------------- Setters ---------------------
 
-
+   # Sets the service to be used for scanning
    def set_service(self, service):
-      self.service=service
+      self.service = service
+      
+      # Override config with service values
+      rules = service.service
+      if (rules):
+         for subject in rules:
+            for key in rules[subject]:
+
+
+               print(subject, key)
+               
+               # KEY required
+               if subject=='authentication' and key=='REQUIRED':
+                  if rules['authentication']['REQUIRED']==True and\
+                        (not service.key or len(service.key)<1):
+                     print("The service requires a key, but none was provided.")
+                     print("Press CTRL+Z to exit.")
+                     exit()
+               
+               # Box limits
+               elif subject=='box' and (key=='MAX_X_DISTANCE' or key=='MAX_Y_DISTANCE'):
+                  if self.config['box']['X_DISTANCE'] > rules['box']['MAX_X_DISTANCE']:
+                     self.config['box']['X_DISTANCE'] = rules['box']['MAX_X_DISTANCE']
+                  if self.config['box']['Y_DISTANCE'] > rules['box']['MAX_Y_DISTANCE']:
+                     self.config['box']['Y_DISTANCE'] = rules['box']['MAX_Y_DISTANCE']
+               
+               # Min sleep between requests
+               elif subject=='request' and key=='MIN_REQUEST_INTERVAL':
+                  if self.config['scheduler']['NEXT_SEARCH_WAIT'] < rules['request']['MIN_REQUEST_INTERVAL']:
+                     self.config['scheduler']['NEXT_SEARCH_WAIT'] = rules['request']['MIN_REQUEST_INTERVAL']
+               
+               # Just copy rest of options
+               else:
+                  self.config['service'][subject][key] = rules[subject][key]
+

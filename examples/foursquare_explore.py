@@ -9,6 +9,5 @@ from classes.services.FoursquareExplore import *
 
 scanner = Scanner()
 service = FoursquareSearch("grocery")
-service.override_config(scanner)
 scanner.set_service(service)
 scanner.start_scanning()

@@ -1,4 +1,3 @@
-from config import *
 from lib.google_places import *
 
 from lxml import etree
@@ -6,22 +5,28 @@ from time import sleep
 import json
 import re
 
-
 class FoursquareSearch():
+   
+   # SERVICE RULES
+   service = {
+      'authentication':{
+         'REQUIRED'    : False
+      },
+      'response': {
+         'MAX_RESULTS' : 30
+      },
+      'box': {
+         'MAX_X_DISTANCE' : 100000,  # max width in real m.
+         'MAX_Y_DISTANCE' : 100000,  # max height in real m.
+      }
+   }
 
    keyword = None
-   
-   def override_config(self, scanner):
-      if scanner.config['box']['MAX_X_DISTANCE'] > 100000:
-         scanner.config['box']['MAX_X_DISTANCE'] = 100000  # 50km max radius
-      if scanner.config['box']['MAX_Y_DISTANCE'] > 100000:
-         scanner.config['box']['MAX_Y_DISTANCE'] = 100000  # 50km max radius
 
    def __init__(self, keyword):
       self.keyword=keyword
 
    def search(self, box, logger):
-      
       # Send request
       requester=FoursquareRequester(logger)
       location=str(box.center[0])+","+str(box.center[1])

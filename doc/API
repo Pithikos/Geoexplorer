@@ -2,7 +2,6 @@
 
 Author: Johan Hanssen Seferidis
 Created: 2013-12-01
-Updated: 2013-12-01
 
 Description: This document contains the API used for adding services to Geoexplorer
 
@@ -22,35 +21,41 @@ Radar Search service provided by Google.
 
 Each service should follow the following blueprint:
 
+
 class MyService:
+
+   service={
+   }
+   
    def search(self, box, logger):
       markers=[]
       # Populate the markers here
       return markers
+      
+      
+The service dictionary is used by the scanner so it knows the limitations
+of the service. For the full options of the service, check the config.py.
+If the dictionary is empty as above, the template in config.py will be fully
+used.
 
-markers is just a list of tupples in the form (latitute, longitude)
+The method search() is called for each box on the map. To this method,
+two objects are provided: box and logger. These objects can be used to
+populate the markers and to log interesting information. More info on
+these objects is provided bellow.
 
-For each box on the map, search will be called. The object box gives the user
-access to the specific area.
-
-The object logger is used for logging. Two functions are used for this: log_scan()
-and log_result(). More information is provided bellow.
+The list markers is just a list of tupples in the form (latitute, longitude)
+Every search() function should return this.
 
 
 
-============================== Configuration file  =============================
+================================= Service rules ================================
 
-The configuration file can be used by importing it like this:
-from config import *
+Every service needs to have a service dictionary in order to function correctly.
+The service dictionary is a way so that the scanner knows the service's limits
+and thus it acts accordingly when these are met.
 
-In most cases the configuration file should be used to read the 'scheduler' and
-override some values for the box size in case the service has some constrains on
-that.
-
-From the 'scheduler' the values should be used in conjunction with the function
-sleep(). For example if you want to allow your service to retry a search on fail,
-then you should make your program to sleep for as much time as given in
-config['scheduler']['NEXT_SEARCH_WAIT']
+All the possible options for a service can be found in config.py in the 'service'
+entry. 
 
 
 

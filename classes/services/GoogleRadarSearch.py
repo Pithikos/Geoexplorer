@@ -1,30 +1,42 @@
-from config import *
 from lib.google_places import *
 
 from lxml import etree
 from time import sleep
 
+
 # Makes a google radar search for each box
 class GoogleRadarSearch():
-
-   searchItems = None
    
-   # Override some config values
-   def override_config(self, scanner):
-      if scanner.config['box']['MAX_X_DISTANCE'] > 100000:
-         scanner.config['box']['MAX_X_DISTANCE'] = 100000  # 50km max radius
-      if scanner.config['box']['MAX_Y_DISTANCE'] > 100000:
-         scanner.config['box']['MAX_Y_DISTANCE'] = 100000  # 50km max radius
-      scanner.config['costs']['PER_REQUEST'] = 5           # 5 cost per google radar
+   # SERVICE RULES
+   service = {
+      'authentication':{
+         'REQUIRED'    : True
+      },
+      'request': {
+         'COST_PER_REQUEST' : 5,
+         'MAX_COST_DAY'     : 1000
+      },
+      'response': {
+         'MAX_RESULTS' : 200
+      },
+      'box': {
+         'MAX_X_DISTANCE' : 100000,  # 50km max radius
+         'MAX_Y_DISTANCE' : 100000,  # 50km max radius
+      }
+   }
+   
+   searchItems = None
+   key         = None
+   resultsN    = 0
 
-   def __init__(self, key, searchItems):
+   def __init__(self, searchItems, key):
       self.searchItems=searchItems
-      G_set_key(key)
+      self.key = key
 
    def search(self, box, logger):
 
       # Make the radar search request and send it
-      googleRequester=GoogleRequester(logger)
+      googleRequester=GoogleRequester(logger, self.key)
       location=str(box.center[0])+","+str(box.center[1])
       radius=max(box.xMeters, box.yMeters)/2  
       
@@ -33,13 +45,14 @@ class GoogleRadarSearch():
             'searchitems': self.searchItems}
       
       googleResponse = googleRequester.send_request(req, 0, 0)
-      logger.log_scan(str(box.bounds())+" : "+googleResponse.status)
+      logger.log_scan(str(box.bounds())+" : "+googleResponse.status+" : "+str(googleResponse.resultsN)+" results")
    
       # Get the markers from the response
       markers=[]
       for result in googleResponse.results:
+         self.resultsN+=1
          markers.append(result['location'])
-         logger.log_result(str(result['location'])+" : "+str(googleResponse.resultsN)+" results")
+         logger.log_result(str(self.resultsN) + " : " + str(result['location']))
    
       return markers
 
@@ -77,10 +90,12 @@ class GoogleResponse():
 class GoogleRequester():
    
    logger = None
+   key = None
 
    # Returns status of response
-   def __init__(self, logger):
+   def __init__(self, logger, key):
       self.logger=logger
+      self.key = key
 
    def send_request(self, request, maxRetries, retryInterval):
       logger=self.logger
@@ -93,7 +108,7 @@ class GoogleRequester():
       
       # Send the request
       while (retries!=maxRetries):
-         resp=G_radarsearch(location, radius, searchitems)
+         resp=G_radarsearch(location, radius, searchitems, self.key)
          googleResponse=GoogleResponse(resp)
          status=googleResponse.status
          
