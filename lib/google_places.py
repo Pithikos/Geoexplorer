@@ -4,25 +4,15 @@ Author: Johan Hanssen Seferidis
 Description: This wrapper is lightweight and minimal. It supports RadarSearch,
 TextSearch, Search and Details requests
 
-NOTES: For usage, check the README
-
+A key should be provided for each search
 '''
 
 from urllib.request import *
 from urllib.parse import *
 
-# ---------------------------------- Configs -----------------------------------
-
-G_API_key=None;
-G_base="https://maps.googleapis.com/maps/api/place/";
-G_sensor="false";
-
 
 # ---------------------------------- Actions -----------------------------------
 
-def G_set_key(newkey):
-   global G_API_key
-   G_API_key=newkey
 
 def G_sendRequest(url):
    try:
@@ -41,16 +31,18 @@ def G_sendRequest(url):
 
 
 # Search by text query
-def G_make_textsearch_req(query):
+def G_make_textsearch_req(query, key):
+   G_base = "https://maps.googleapis.com/maps/api/place/"
    url = G_base + "textsearch/xml?"
    url+= "&query=" + quote(query.replace(" ", "+"))
-   url+= "&sensor=" + G_sensor
-   url+= "&key=" + G_API_key
+   url+= "&sensor=" +"false"
+   url+= "&key=" + key
    return url
 
 
 # Search in radius of a location
-def G_make_radarsearch_req(location, radius, searchitems):
+def G_make_radarsearch_req(location, radius, searchitems, key):
+   G_base = "https://maps.googleapis.com/maps/api/place/"
    url = G_base + "radarsearch/xml?"
    url+= "location=" + location
    url+= "&radius=" + str(radius)
@@ -66,13 +58,14 @@ def G_make_radarsearch_req(location, radius, searchitems):
       url+="&types=" + quote(searchitems["types"])
    except:
       pass
-   url+= "&sensor=" + G_sensor
-   url+= "&key=" + G_API_key
+   url+= "&sensor=" + "false"
+   url+= "&key=" + key
    return url
 
 
 # Search in radius of a location
-def G_make_search_req(location, radius, searchitems):
+def G_make_search_req(location, radius, searchitems, key):
+   G_base = "https://maps.googleapis.com/maps/api/place/"
    url = G_base + "search/xml?"
    url+= "location=" + location
    url+= "&radius=" + str(radius)
@@ -88,17 +81,18 @@ def G_make_search_req(location, radius, searchitems):
       url+="&types=" + quote(searchitems["types"])
    except:
       pass
-   url+= "&sensor=" + G_sensor
-   url+= "&key=" + G_API_key
+   url+= "&sensor=" + "false"
+   url+= "&key=" + key
    return url
 
 
 # Get details for an establishment or other interest location
-def G_make_details_req(reference):
+def G_make_details_req(reference, key):
+   G_base = "https://maps.googleapis.com/maps/api/place/"
    url = G_base + "details/xml?"
    url+= "&reference="+ reference
-   url+= "&sensor=" + G_sensor
-   url+= "&key=" + G_API_key
+   url+= "&sensor=" + "false"
+   url+= "&key=" + key
    return url
 
 
@@ -106,24 +100,24 @@ def G_make_details_req(reference):
 
 
 # Search by text query
-def G_textsearch(query):
-   url = G_make_textsearch_req(query)
+def G_textsearch(query, key):
+   url = G_make_textsearch_req(query, key)
    return G_sendRequest(url)
 
 
 # Search by using google's radar search
-def G_radarsearch(location, radius, searchitems):
-   url = G_make_radarsearch_req(location, radius, searchitems)
+def G_radarsearch(location, radius, searchitems, key):
+   url = G_make_radarsearch_req(location, radius, searchitems, key)
    return G_sendRequest(url)
 
 
 # Search in radius of a location
-def G_search(location, radius, searchitems):
-   url = G_make_search_req(location, radius, searchitems)
+def G_search(location, radius, searchitems, sensor, key):
+   url = G_make_search_req(location, radius, searchitems, key)
    return G_sendRequest(url)
 
 
 # Get details for an establishment or location of interest
-def G_details(reference):
-   url = G_make_details_req(reference)
+def G_details(reference, sensor, key):
+   url = G_make_details_req(reference, key)
    return G_sendRequest(url)
