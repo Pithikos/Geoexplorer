@@ -1,5 +1,13 @@
 ================================== To-do List ==================================
 
+Important:
+
+* Threading. At current state, the Messenger does not exit when parent
+  is exiting.
+* Use an actual timer between requests so that sleeping between them is
+  accurate.
+  
+
 Main program:
 
 * Autosplit box once maximum results are given from a box scan. For this, a new
@@ -14,14 +22,12 @@ Main program:
 * Merging services should be allowed.
 
 
-
 GUI:
 
 * Make markers clickable. Once the marker is clicked, it should either show some
   info passed by the service or use Google Places to show info.
 * Make it possible to change the marker icon. Use some default ones.
 * Controls like PAUSE and STOP.
-
 
 
 Logging:
