@@ -9,7 +9,9 @@ from config import *
 from threading import Thread # Needed for Messenger
 from time import sleep
 from sys import exit
-import datetime
+from datetime import datetime, date
+import copy
+
 
 class Scanner:
    
@@ -21,13 +23,15 @@ class Scanner:
    msnThread = None
    
    # Stats for overall scanning
-   sessionStart  = None
-   sessionEnd    = None
-   boxesNinit    = 0
-   boxesN        = 0
-   requestsTotal = 0
-   costTotal     = 0
-   
+   sessionStart    = None
+   sessionEnd      = None
+   boxesNinit      = 0
+   boxesN          = 0
+   requestsTotal   = 0
+   costTotal       = 0
+   minTimeInterval = 'INF'
+   maxTimeInterval = 0
+   sumIntervalsSecs = 0
    
    # Current box scan
    currentBox         = None
@@ -111,7 +115,7 @@ class Scanner:
 
    # Start scanning
    def start_scanning(self):
-      self.sessionStart=datetime.datetime.now()
+      self.sessionStart=datetime.now()
       logger=self.logger
 
       # Make a grid of scannable boxes
@@ -123,25 +127,49 @@ class Scanner:
       # Scan each box
       toScan=list(grid.boxes)
       consequentReqRetries=0
+      boxScanStart = None
+      isFirstScan    = True
       while(toScan):
+         
          box=toScan[0]
          self.currentBox=box
          sleep(self.config['scheduler']['NEXT_SEARCH_WAIT'])
          self.GUI.remove_box(box)
          self.GUI.add_box(box, 'yellow')
 
-         markers = self.service.search(box, logger) # HERE WE SEARCH BOX
+
+         # Timing interval between last box scan
+         if isFirstScan:
+            boxScanStart = datetime.now()
+            isFirstScan  = False
+         else:
+            boxScanPrev  = copy.deepcopy(boxScanStart)
+            boxScanStart = datetime.now()
+            tdelta = boxScanStart - boxScanPrev
+            secs   = tdelta.total_seconds()
+            if (secs > self.maxTimeInterval):
+               self.maxTimeInterval = secs
+            if (self.minTimeInterval=='INF' or secs < self.minTimeInterval):
+               self.minTimeInterval = secs
+            self.sumIntervalsSecs+=secs
+         
+         
+         # Search box
+         markers = self.service.search(box, logger) 
          max_results = self.config['service']['response']['MAX_RESULTS']
+         
          
          # Update some stats
          self.requestsTotal +=1
          self.costTotal += self.config['service']['request']['COST_PER_REQUEST']
          logger.update_session()
 
+
          # Max cost reached
          max_cost_day = self.config['service']['request']['MAX_COST_DAY']
          if max_cost_day!='INF' and self.costTotal > max_cost_day:
             print("max cost per day reached")
+         
          
          # Autosplit
          if self.config['box']['AUTOSPLIT'] and max_results!='INF' and\
@@ -157,19 +185,22 @@ class Scanner:
             toScan.insert(3, boxes[3])
             continue
 
+
          # Add marker on map
          for marker in markers:
             if (len(marker)>=2):
                self.GUI.add_marker(marker[0], marker[1])
+
 
          # Remove finished box
          self.GUI.remove_box(box)
          self.GUI.add_box(box, 'green')
          toScan.pop(0)
          consequentReqRetries=0
-         
+
+
       # Finish
-      self.sessionEnd=datetime.datetime.now()
+      self.sessionEnd=datetime.now()
       logger.update_session()
       print("Scanning finished.")
       print("Press CTRL+C to stop application.")

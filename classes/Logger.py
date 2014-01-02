@@ -1,7 +1,5 @@
-import datetime
-
+from datetime import datetime
 import os
-from config import *
 
 class Logger:
    
@@ -15,8 +13,8 @@ class Logger:
 
    def __init__(self, logpath, scansfile, sessionfile, resultsfile, scanner):
       self.scanner=scanner
-      if (config['NEW_FOLDER_EACH_SESSION'] == True):
-         logpath+= '/' + datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
+      if (scanner.config['NEW_FOLDER_EACH_SESSION'] == True):
+         logpath+= '/' + datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
       if not os.path.exists(logpath):
          os.makedirs(logpath)
             
@@ -40,7 +38,7 @@ class Logger:
 
    # Append text as a new line to a log file
    def append(self, type, text):
-      timestamp=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+      timestamp=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
       if   (type=='scanning'):
          self.fScanning.write(timestamp+" : "+text+"\n")
       elif (type=='results'):
@@ -66,14 +64,35 @@ class Logger:
       self.fSession.seek(0, 0)
       self.fSession.truncate()
       
+      # Time elapsed
+      started = str(scanner.sessionStart.strftime("%Y-%m-%d %H:%M:%S"))
       if (not scanner.sessionEnd):
          finished='-'
+         timeElapsed = datetime.now() - scanner.sessionStart
       else:
          finished=str(scanner.sessionEnd.strftime("%Y-%m-%d %H:%M:%S"))
-         
-      self.fSession.write("Started scanning  : "+str(scanner.sessionStart.strftime("%Y-%m-%d %H:%M:%S"))+"\n")
+         timeElapsed = scanner.sessionEnd - scanner.sessionStart
+      
+      # Statistics
+      if scanner.requestsTotal > 1:
+         avgInterval = scanner.sumIntervalsSecs/(scanner.requestsTotal-1)
+      else:
+         avgInterval = scanner.sumIntervalsSecs
+      
+      
+      
+      self.fSession.write("============ Session information ============\n\n")
+      self.fSession.write("Started scanning  : "+started +"\n")
       self.fSession.write("Finished scanning : "+finished+"\n")
-      self.fSession.write("Number of grid boxes initially : "+str(scanner.boxesNinit)+"\n")
-      self.fSession.write("Number of grid boxes in the end : "+str(scanner.boxesN)+"\n")
-      self.fSession.write("Total requests sent : "    +str(scanner.requestsTotal)+"\n")
-      self.fSession.write("Quota used          : "    +str(scanner.costTotal)+"\n")
+      self.fSession.write("Time elapsed      : "+str(timeElapsed)+"\n")
+      self.fSession.write("\n\n")
+      self.fSession.write("----------------- Grid boxes -----------------\n")
+      self.fSession.write("Number of boxes initially: "+str(scanner.boxesNinit)+"\n")
+      self.fSession.write("Number of boxes in the end: "+str(scanner.boxesN)+"\n")
+      self.fSession.write("Quota used         : "+str(scanner.costTotal)       +"\n")
+      self.fSession.write("\n\n")
+      self.fSession.write("------------------ Requests ------------------\n")
+      self.fSession.write("Total requests sent: "+str(scanner.requestsTotal)   +"\n")
+      self.fSession.write("Min interval (secs): "+str(scanner.minTimeInterval) +"\n")
+      self.fSession.write("Max interval (secs): "+str(scanner.maxTimeInterval) +"\n")
+      self.fSession.write("Avg interval (secs): "+str(avgInterval) +"\n")
