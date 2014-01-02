@@ -13,11 +13,11 @@ config={
    'GUI_PORT' : 9017,
 
    # Log files
-   'LOG_PATH'                : '/log',        # Directory where to store the log files
-   'LOG_SCANNING_FILENAME'   : 'scans.log',   # Main log file used for debugging
-   'LOG_SESSION_FILENAME'    : 'session.log', # Keeps statistics for each scanning session
-   'LOG_RESULTS_FILENAME'    : 'results.log', # All the results extracted from the scanning session
-   'NEW_FOLDER_EACH_SESSION' :  False,       # True if you want a new folder to be created for each scanning session
+   'LOG_PATH'                : '/log',         # Directory where to store the log files
+   'LOG_SCANNING_FILENAME'   : 'scanning.log', # Main log file used for debugging
+   'LOG_SESSION_FILENAME'    : 'session.log',  # Keeps statistics for each scanning session
+   'LOG_RESULTS_FILENAME'    : 'results.log',  # All the results extracted from the scanning session
+   'NEW_FOLDER_EACH_SESSION' :  False,        # True if you want a new folder to be created for each scanning session
 
    # Scanning area
    'SCANNING_AREA' : (61.5, 19, 59, 14),      #Stockholm
