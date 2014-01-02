@@ -21,6 +21,7 @@ config={
 
    # Scanning area
    'SCANNING_AREA' : (61.5, 19, 59, 14),      #Stockholm
+   #'SCANNING_AREA' : (59.35, 18.05, 59.34, 18.07),
 
    # Scanning box options
    'box':

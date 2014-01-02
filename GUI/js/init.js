@@ -4,7 +4,7 @@
 "use strict"
 
 var map=null;
-var boxes=new Array();
+var boxes = {}; // The index is the python bounds sent by the main program
 
 function init() {
    

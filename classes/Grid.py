@@ -61,7 +61,7 @@ class Grid:
       # GUI
       self.GUI.remove_box(oldbox)
       self.GUI.add_boxes(boxes, 'red')
-      
+
       return boxes
       
 

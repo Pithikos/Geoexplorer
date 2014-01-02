@@ -11,10 +11,6 @@ class GUI:
 
 
    def add_box(self, box, color):
-      lat1=box.WN[0]
-      lng1=box.WN[1]
-      lat2=box.SE[0]
-      lng2=box.SE[1]
       colorhex='#000000'
       if (color=='red'):
          colorhex='#FF0000'
@@ -22,7 +18,11 @@ class GUI:
          colorhex='#00FF00'
       elif (color=='yellow'):
          colorhex='#FFFF00'
-      self.messenger.send("draw:box:"+str(lat1)+","+str(lng1)+","+str(lat2)+","+str(lng2)+","+colorhex)
+      self.messenger.send("draw:box:"+str(box.WN[0])+","+\
+                                      str(box.WN[1])+","+\
+                                      str(box.SE[0])+","+\
+                                      str(box.SE[1])+","+\
+                                      colorhex)
 
 
    def add_boxes(self, boxes, color):
@@ -31,11 +31,10 @@ class GUI:
 
 
    def remove_box(self, box):
-      lat1=box.WN[0]
-      lng1=box.WN[1]
-      lat2=box.SE[0]
-      lng2=box.SE[1]
-      self.messenger.send("remove:box:"+str(lat1)+","+str(lng1)+","+str(lat2)+","+str(lng2))
+      self.messenger.send("remove:box:"+str(box.WN[0])+","+\
+                                        str(box.WN[1])+","+\
+                                        str(box.SE[0])+","+\
+                                        str(box.SE[1]))
 
 
    def add_marker(self, lat, lng):
@@ -43,8 +42,11 @@ class GUI:
 
 
    def center_map(self, lat, lng, lat2, lng2):
-      self.messenger.send("change:view:"+str(lat)+","+str(lng)+","+str(lat2)+","+str(lng2))
-
+      self.messenger.send("change:view:"+str(lat) +","+\
+                                         str(lng) +","+\
+                                         str(lat2)+","+\
+                                         str(lng2))
+      
 
    def show_message(self, message):
       self.messenger.send(message)
@@ -97,6 +99,7 @@ class Messenger(WebSocketServer):
     # Sets a handler for incoming messages
     def setHandler(self, handler):
         self.handler=handler
+
 
 # WORKING EXAMPLE (needs to import time)
 '''
