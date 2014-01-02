@@ -56,35 +56,37 @@ class ResponseParser():
       self.results = []
       root = etree.HTML(response)
       
-      try:
-         script  = root.find("body//script").text
-         pattern = r"(fourSq.config.explore.response = {)(.*?)(};)"
-         obj     = '{' + re.search(pattern, script).group(2) + '}'
-      except ValueError:
-         print("Could not locate script tag in response. Will log response to scan.")
+      script  = root.find("body//script").text
+      patErr     = r"(fourSq.config.explore.errorMeta = {)(.*?)(};)"
+      patResults = r"(fourSq.config.explore.response = {)(.*?)(};)"
+      error      = re.search(patErr, script)
+      results    = re.search(patResults, script)
+      
+      if error:
+         print("Response gave error:", error.group(2))
+         logger.log_scan("Response gave error: "+error.group(2))
          logger.log_scan("Response was: "+str(response))
-      except:
-         print("Could not parse response properly. Will log response to scan.")
-         logger.log_scan("Response was: "+str(response))
-         logger.log_scan("Script extracted from response: "+script) 
-         
+         logger.log_scan("Script extracted from response: "+script)
+         print("Logged response")
+      else:
+         jsonObj='{' + results.group(2) + '}'
 
-      for item in json.loads(obj)['groups'][0]['items']:
-         venue    = item['venue']
-         name     = venue['name']
-         lat      = venue['location']['lat']
-         lng      = venue['location']['lng']
-         address  = venue['location']['address'] if 'address' in venue['location'] else ""
-         country  = venue['location']['country'] if 'country' in venue['location'] else ""
-         self.results.append((name, (lat, lng), address, country))
-         self.resultsN+=1
+         for item in json.loads(jsonObj)['groups'][0]['items']:
+            venue    = item['venue']
+            name     = venue['name']
+            lat      = venue['location']['lat']
+            lng      = venue['location']['lng']
+            address  = venue['location']['address'] if 'address' in venue['location'] else ""
+            country  = venue['location']['country'] if 'country' in venue['location'] else ""
+            self.results.append((name, (lat, lng), address, country))
+            self.resultsN+=1
 
-      '''for venue in root.findall("body//div[@class='venueBlock']"):
-         index   = venue.find(".//span[@class='venueIndex']").text
-         name    = venue.find(".//div[@class='venueName']/a").text
-         address = venue.find(".//div[@class='venueAddress']").text
-         print(index, name, address)
-      '''
+         '''for venue in root.findall("body//div[@class='venueBlock']"):
+            index   = venue.find(".//span[@class='venueIndex']").text
+            name    = venue.find(".//div[@class='venueName']/a").text
+            address = venue.find(".//div[@class='venueAddress']").text
+            print(index, name, address)
+         '''
 
 
 class FoursquareRequester():
