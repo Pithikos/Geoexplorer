@@ -23,6 +23,11 @@ class GUI:
       self.messenger.send("draw:box:"+str(lat1)+","+str(lng1)+","+str(lat2)+","+str(lng2)+","+colorhex)
 
 
+   def add_boxes(self, boxes, color):
+      for box in boxes:
+         self.add_box(box, color)
+
+
    def remove_box(self, box):
       lat1=box.WN[0]
       lng1=box.WN[1]
@@ -46,8 +51,8 @@ class GUI:
    def add_grid(self, grid):
       for box in grid.boxes:
          self.add_box(box, 'red')
-         
-         
+
+
 # Used by the GUI class
 class Messenger(WebSocketServer):
 
@@ -111,4 +116,3 @@ while 1:
    server.send("uno")
 '''
 
-# ------------------------------------------------------------------------------

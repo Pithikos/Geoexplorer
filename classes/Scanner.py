@@ -23,9 +23,11 @@ class Scanner:
    # Stats for overall scanning
    scanStartDatetime  = None
    scanFinishDatetime = None
+   boxesNinit         = 0
    boxesN             = 0
    requestsTotal      = 0
    costTotal          = 0
+   
    
    # Current box scan
    currentBox         = None
@@ -49,7 +51,7 @@ class Scanner:
       self.msnThread.start()
       
       # GUI
-      self.GUI    = GUI(msn)
+      self.GUI = GUI(msn)
       
       # Bounds
       self.set_bounds(self.config['SCANNING_AREA'])
@@ -61,6 +63,7 @@ class Scanner:
                            self.config['LOG_RESULT_FILENAME'],
                            self)
 
+
    # Set outer bounds for the scanning
    def set_bounds(self, bounds):
       # Sort the bounds so that the left couple
@@ -70,8 +73,10 @@ class Scanner:
       lat2=bounds[2]
       lng2=bounds[3]
       
-      if (lat1<lat2) or (lng1>lng2): #swap couples
-         bounds=(lat2, lng2, lat1, lng1)
+      if (lat1<lat2):
+         bounds=(lat2, lng1, lat1, lng2)
+      if (lng1>lng2):
+         bounds=(lat1, lng2, lat2, lng1)
          
       self.bounds=bounds
       self.GUI.center_map(bounds[0], bounds[1], bounds[2], bounds[3])
@@ -95,7 +100,7 @@ class Scanner:
         
                
    # ---------------------------------------------------------------------------
-   
+
 
    # Start scanning
    def start_scanning(self):
@@ -103,10 +108,10 @@ class Scanner:
       logger=self.logger
 
       # Make a grid of scannable boxes
-      grid=Grid(self.bounds, self) 
-      self.GUI.add_grid(grid)
-      self.boxesN=len(grid.boxes)
-      print("Number of boxes to scan: ", self.boxesN)
+      grid=Grid(self.bounds, self, self.GUI) 
+      self.boxesN     = len(grid.boxes)
+      self.boxesNinit = len(grid.boxes)
+      print("Number of boxes to scan(initially): ", self.boxesN)
 
       # Scan each box
       toScan=list(grid.boxes)
@@ -120,16 +125,29 @@ class Scanner:
 
          markers = self.service.search(box, logger) # HERE WE SEARCH BOX
          max_results = self.config['service']['response']['MAX_RESULTS']
-         if max_results!='INF' and len(markers) >= max_results:
-            print("response has max results")
-
+         
+         # Update some stats
          self.requestsTotal +=1
          self.costTotal += self.config['service']['request']['COST_PER_REQUEST']
          logger.update_stats()
 
+         # Max cost reached
          max_cost_day = self.config['service']['request']['MAX_COST_DAY']
          if max_cost_day!='INF' and self.costTotal > max_cost_day:
             print("max cost per day reached")
+         
+         # Autosplit
+         if self.config['box']['AUTOSPLIT'] and max_results!='INF' and\
+                                             len(markers) >= max_results:
+            boxes=grid.splitBoxIn4(box)
+            self.boxesN-=1
+            toScan.pop(0)
+            self.boxesN+=4
+            toScan.insert(0, boxes[0])
+            toScan.insert(1, boxes[1])
+            toScan.insert(2, boxes[2])
+            toScan.insert(3, boxes[3])
+            continue
 
          # Add marker on map
          for marker in markers:
@@ -163,9 +181,6 @@ class Scanner:
          for subject in rules:
             for key in rules[subject]:
 
-
-               print(subject, key)
-               
                # KEY required
                if subject=='authentication' and key=='REQUIRED':
                   if rules['authentication']['REQUIRED']==True and\

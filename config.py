@@ -20,13 +20,14 @@ config={
    'NEW_FOLDER_EACH_SCAN' :  False,       # True if you want a new folder to be created for each scanning session
 
    # Scanning area
-   'SCANNING_AREA' : (60, 17, 59, 19),      #Stockholm
+   'SCANNING_AREA' : (57, 11, 58, 13),      #Stockholm
 
    # Scanning box options
    'box':
    {
-      'X_DISTANCE' : 200000,  # desirable width of box in m.
-      'Y_DISTANCE' : 200000,  # desirable height of box in m.
+      'X_DISTANCE' : 200000,   # desirable width of box in m.
+      'Y_DISTANCE' : 200000,   # desirable height of box in m.
+      'AUTOSPLIT' : True      # autosplit the box if needed
    },
 
    # Timing different events

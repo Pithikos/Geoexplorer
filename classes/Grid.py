@@ -1,18 +1,22 @@
 from lib.geotools import *
-from lib.google_places import *
-
-from config import *
-
 
 # Grid is made out of box instances
 class Grid:
-
+   
+   
+   # GUI is used to reflect changes made on the grid
+   GUI = None
+   
    boxes=[]
    maxBoxX = None
    maxBoxY = None 
 
+
+
    # Creates a rectangle grid between two points
-   def __init__(self, bounds, scanner):
+   def __init__(self, bounds, scanner, GUI):
+      
+      self.GUI = GUI
       
       self.maxBoxX = scanner.config['box']['X_DISTANCE']
       self.maxBoxY = scanner.config['box']['Y_DISTANCE']
@@ -22,29 +26,23 @@ class Grid:
       
       # Split grid into smaller boxes if needed
       while(self.existsTooBigBox()):
-         for i in range(len(self.boxes)):
-            box=self.boxes[i]
+         for box in self.boxes:
             if (box.xMeters>self.maxBoxX) and (box.yMeters>self.maxBoxY):
-               b1, b2, b3, b4 = self.splitBoxIn4(self.boxes[i])
-               self.boxes.pop(i)
-               self.boxes.extend((b1, b2, b3, b4))
+               self.splitBoxIn4(box)
             elif (box.xMeters>self.maxBoxX):
-               b1, b2 = self.splitBoxVertically(self.boxes[i])
-               self.boxes.pop(i)
-               self.boxes.extend((b1, b2))
+               self.splitBoxVertically(box)
             elif (box.yMeters>self.maxBoxY):
-               b1, b2 = self.splitBoxHorizontally(self.boxes[i])
-               self.boxes.pop(i)
-               self.boxes.extend((b1, b2))
-
+               self.splitBoxHorizontally(box)
+               
+      # Draw the grid
+      GUI.add_grid(self)
+      
       # Sort boxes
       self.sortBoxes()
 
 
-   def getBoxCenter(self, box):
-      pass
 
-   # Split a box into 4 equal boxes
+   # Split a box into 4 equal boxes (in place)
    def splitBoxIn4(self, box):
       lat1=box.WN[0]
       lng1=box.WN[1]
@@ -52,35 +50,61 @@ class Grid:
       lng2=box.SE[1]
       midLat=middleLat(lat1, lat2)
       midLng=middleLng(lng1, lng2)
-      box1=(lat1, lng1, midLat, midLng)
-      box2=(lat1, midLng, midLat, lng2)
-      box3=(midLat, lng1, lat2, midLng)
-      box4=(midLat, midLng, lat2, lng2)
-      return Box(box1), Box(box2), Box(box3), Box(box4)
+      b1=Box((lat1, lng1, midLat, midLng))
+      b2=Box((lat1, midLng, midLat, lng2))
+      b3=Box((midLat, lng1, lat2, midLng))
+      b4=Box((midLat, midLng, lat2, lng2))
+      boxes = [b1, b2, b3, b4]
+      oldbox = self.boxes.pop(self.boxes.index(box))
+      self.boxes.extend(boxes)
+      
+      # GUI
+      self.GUI.remove_box(oldbox)
+      self.GUI.add_boxes(boxes, 'red')
+      
+      return boxes
+      
 
-
-   # Split a box horizontally in two equal boxes
+   # Split a box horizontally in two equal boxes (in place)
    def splitBoxHorizontally(self, box):
       lat1=box.WN[0]
       lng1=box.WN[1]
       lat2=box.SE[0]
       lng2=box.SE[1]
       midLat=round((lat1+lat2)/2, 5)
-      box1=(lat1, lng1, midLat, lng2)
-      box2=(midLat, lng1, lat2, lng2)
-      return Box(box1), Box(box2)
+      b1=Box((lat1, lng1, midLat, lng2))
+      b2=Box((midLat, lng1, lat2, lng2))
+      boxes=[b1, b2]
+      oldbox = self.boxes.pop(self.boxes.index(box))
+      self.boxes.extend(boxes)
+      
+      # GUI
+      self.GUI.remove_box(oldbox)
+      self.GUI.add_boxes(boxes, 'red')
+      
+      return boxes
 
 
-   # Split a box vertically in two equal boxes
+
+   # Split a box vertically in two equal boxes (in place)
    def splitBoxVertically(self, box):
       lat1=box.WN[0]
       lng1=box.WN[1]
       lat2=box.SE[0]
       lng2=box.SE[1]
       midLng=round((lng1+lng2)/2, 5)
-      box1=(lat1, lng1, lat2, midLng)
-      box2=(lat1, midLng, lat2, lng2)
-      return Box(box1), Box(box2)
+      b1=Box((lat1, lng1, lat2, midLng))
+      b2=Box((lat1, midLng, lat2, lng2))
+      boxes=[b1, b2]
+      oldbox = self.boxes.pop(self.boxes.index(box))
+      self.boxes.extend(boxes)
+      
+      # GUI
+      self.GUI.remove_box(oldbox)
+      self.GUI.add_boxes(boxes, 'red')
+      
+      return boxes
+
 
 
    # See if box has x or y bigger than limit
@@ -98,6 +122,11 @@ class Grid:
    def sortBoxes(self):
       self.boxes=sorted(self.boxes, key=lambda x: x.WN[1])#by lng
       self.boxes=sorted(self.boxes, key=lambda x: x.WN[0], reverse=True)#by lat
+
+
+
+
+# --------------------------------- public API ---------------------------------
 
 
 

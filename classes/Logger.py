@@ -7,9 +7,9 @@ class Logger:
    
    scanner = None # Let's logger access all scanner's information
 
-   fScan   = None # Keeps track of each step in the scanning process
-   fStats  = None # Keeps track of google quota for each scan
-   fResult = None # Makes a record of the findings from the scan
+   fScan   = None # Keeps info about each box scan
+   fStats  = None # Keeps info about the scanning session
+   fResult = None # Keeps info about each single result
 
 
    def __init__(self, logpath, scanfile, statsfile, resultfile, scanner):
@@ -70,6 +70,7 @@ class Logger:
          
       self.fStats.write("Started scanning  : "+str(scanner.scanStartDatetime.strftime("%Y-%m-%d %H:%M:%S"))+"\n")
       self.fStats.write("Finished scanning : "+finished+"\n")
-      self.fStats.write("Number of grid boxes : "+str(scanner.boxesN)+"\n")
+      self.fStats.write("Number of grid boxes initially : "+str(scanner.boxesNinit)+"\n")
+      self.fStats.write("Number of grid boxes in the end : "+str(scanner.boxesN)+"\n")
       self.fStats.write("Requests sent : "    +str(scanner.requestsTotal)+"\n")
       self.fStats.write("Quota used    : "    +str(scanner.costTotal)+"\n")
