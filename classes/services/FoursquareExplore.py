@@ -15,8 +15,8 @@ class FoursquareSearch():
          'MAX_RESULTS' : 30
       },
       'box': {
-         'MAX_X_DISTANCE' : 100000,  # max width in real m.
-         'MAX_Y_DISTANCE' : 100000,  # max height in real m.
+         'MAX_X_DISTANCE' : 250000,  # max width  in real m.
+         'MAX_Y_DISTANCE' : 250000,  # max height in real m.
       }
    }
 
