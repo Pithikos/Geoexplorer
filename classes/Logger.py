@@ -10,7 +10,8 @@ class Logger:
    fScan   = None # Keeps info about each box scan
    fStats  = None # Keeps info about the scanning session
    fResult = None # Keeps info about each single result
-
+   
+   resultPath = None # Path used for result log
 
    def __init__(self, logpath, scanfile, statsfile, resultfile, scanner):
       self.scanner=scanner
@@ -34,7 +35,8 @@ class Logger:
       self.fScan   = open(scanpath,   "a", 1)
       self.fStats  = open(statspath,  "w", 1)
       self.fResult = open(resultpath, "a", 1)
-
+         
+      self.resultPath = resultpath
 
    # Append text as a new line to a log file
    def append(self, type, text):
@@ -42,7 +44,8 @@ class Logger:
       if   (type=='scan'):
          self.fScan.write(timestamp+" : "+text+"\n")
       elif (type=='result'):
-         self.fResult.write(text+"\n")
+         if text not in open(self.resultPath).read(): # ¤This might become a hog for huge files
+            self.fResult.write(text+"\n")
 
 
    # Append a new result to the results log file

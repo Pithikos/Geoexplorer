@@ -139,6 +139,7 @@ class Scanner:
          # Autosplit
          if self.config['box']['AUTOSPLIT'] and max_results!='INF' and\
                                              len(markers) >= max_results:
+            logger.log_scan("Response had max possible results. Autosplitting..")
             boxes=grid.splitBoxIn4(box)
             self.boxesN-=1
             toScan.pop(0)
