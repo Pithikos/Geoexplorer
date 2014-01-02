@@ -21,12 +21,12 @@ class Scanner:
    msnThread = None
    
    # Stats for overall scanning
-   scanStartDatetime  = None
-   scanFinishDatetime = None
-   boxesNinit         = 0
-   boxesN             = 0
-   requestsTotal      = 0
-   costTotal          = 0
+   sessionStart  = None
+   sessionEnd    = None
+   boxesNinit    = 0
+   boxesN        = 0
+   requestsTotal = 0
+   costTotal     = 0
    
    
    # Current box scan
@@ -58,9 +58,9 @@ class Scanner:
       print("Scanning area set to: ", self.bounds)
       
       self.logger = Logger('.'+self.config['LOG_PATH'],
-                           self.config['LOG_SCAN_FILENAME'],
-                           self.config['LOG_STATS_FILENAME'],
-                           self.config['LOG_RESULT_FILENAME'],
+                           self.config['LOG_SCANNING_FILENAME'],
+                           self.config['LOG_SESSION_FILENAME'],
+                           self.config['LOG_RESULTS_FILENAME'],
                            self)
 
 
@@ -111,7 +111,7 @@ class Scanner:
 
    # Start scanning
    def start_scanning(self):
-      self.scanStartDatetime=datetime.datetime.now()
+      self.sessionStart=datetime.datetime.now()
       logger=self.logger
 
       # Make a grid of scannable boxes
@@ -136,7 +136,7 @@ class Scanner:
          # Update some stats
          self.requestsTotal +=1
          self.costTotal += self.config['service']['request']['COST_PER_REQUEST']
-         logger.update_stats()
+         logger.update_session()
 
          # Max cost reached
          max_cost_day = self.config['service']['request']['MAX_COST_DAY']
@@ -169,8 +169,8 @@ class Scanner:
          consequentReqRetries=0
          
       # Finish
-      self.scanFinishDatetime=datetime.datetime.now()
-      logger.update_stats()
+      self.sessionEnd=datetime.datetime.now()
+      logger.update_session()
       print("Scanning finished.")
       print("Press CTRL+C to stop application.")
 

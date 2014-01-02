@@ -45,23 +45,23 @@ files. The log files are being updated on-the-fly.
 The config.py keeps all the applicable options for Geoexplorer in a single file.
 Each option is described bellow:
 
-      GUI_PORT             -> Port being used for the communication with the GUI
+      GUI_PORT              -> Port being used for the communication with the GUI
       
-      LOG_PATH             -> Folder name where logs should be stored
-      LOG_SCAN_FILENAME    -> Name of file for logging of each box scan 
-      LOG_STATS_FILENAME   -> Name of file for logging statistics fom each scanning session
-      LOG_RESULT_FILENAME  -> Name of file for logging the results from each box
-      NEW_FOLDER_EACH_SCAN -> Should a new folder be created on each new scan?
+      LOG_PATH              -> Folder name where logs should be stored
+      LOG_SCANNING_FILENAME -> Name of file for logging scanning steps
+      LOG_SESSION_FILENAME  -> Name of file for logging statistics fom each scanning session
+      LOG_RESULTS_FILENAME  -> Name of file for logging every single result
+      NEW_FOLDER_EACH_SCAN  -> Should a new folder be created on each new scan?
       
-      BOUNDS               -> The coordinates lat, lng, lat2, lng2 for scanning. 
+      BOUNDS                -> The coordinates lat, lng, lat2, lng2 for scanning. 
       
       'box'
-      X_DISTANCE           -> Desirable distance in m. for a box' x axis
-      Y_DISTANCE           -> Desirable distance in m. for a box' y axis
+      X_DISTANCE            -> Desirable distance in m. for a box' x axis
+      Y_DISTANCE            -> Desirable distance in m. for a box' y axis
 
       'scheduler'
-      NEXT_SEARCH_WAIT     -> Seconds to wait before going to next box
-      ON_QUERY_LIMIT_WAIT  -> Seconds to wait when service hits query limit
+      NEXT_SEARCH_WAIT      -> Seconds to wait before going to next box
+      ON_QUERY_LIMIT_WAIT   -> Seconds to wait when service hits query limit
 
 The 'service' entry is used as a template by the services and should not
 be altered.
@@ -72,10 +72,10 @@ be altered.
 
 There are three files for logging different things.
 
-STATS:  Logging for the whole session
-SCAN:   Logging for each box
-RESULT: Logging for each box result (this will be essentially all the results
-        summed up)
+SESSION:  Different statistics for the whole scanning session
+SCANNING: This is the main debugging log file. Every scanning step is recorded
+          in this file.
+RESULTS:  This keeps all the results extracted during the scanning session
 
 
 

@@ -13,21 +13,21 @@ config={
    'GUI_PORT' : 9017,
 
    # Log files
-   'LOG_PATH'             : '/log',       # Directory where to store the log files
-   'LOG_SCAN_FILENAME'    : 'scan.log',   # Name of log for the scanning process
-   'LOG_STATS_FILENAME'   : 'stats.log',  # Name of log for statistics
-   'LOG_RESULT_FILENAME'  : 'result.log', # Name of log for results acquired from the scanning
-   'NEW_FOLDER_EACH_SCAN' :  False,       # True if you want a new folder to be created for each scanning session
+   'LOG_PATH'                : '/log',        # Directory where to store the log files
+   'LOG_SCANNING_FILENAME'   : 'scans.log',   # Main log file used for debugging
+   'LOG_SESSION_FILENAME'    : 'session.log', # Keeps statistics for each scanning session
+   'LOG_RESULTS_FILENAME'    : 'results.log', # All the results extracted from the scanning session
+   'NEW_FOLDER_EACH_SESSION' :  False,       # True if you want a new folder to be created for each scanning session
 
    # Scanning area
-   'SCANNING_AREA' : (57, 11, 58, 13),      #Stockholm
+   'SCANNING_AREA' : (61.5, 19, 59, 14),      #Stockholm
 
    # Scanning box options
    'box':
    {
-      'X_DISTANCE' : 200000,   # desirable width of box in m.
-      'Y_DISTANCE' : 200000,   # desirable height of box in m.
-      'AUTOSPLIT' : True      # autosplit the box if needed
+      'X_DISTANCE' : 1000000,   # desirable width of box in m.
+      'Y_DISTANCE' : 1000000,   # desirable height of box in m.
+      'AUTOSPLIT'  : True      # autosplit the box if needed
    },
 
    # Timing different events

@@ -137,7 +137,7 @@ class GoogleRequester():
             # EXIT PROGRAM HERE
             
          else:
-            logger.append('scan', 'Unknown error in response from Google server')
+            logger.log_scan('scan', 'Unknown error in response from Google server')
             print("Unknown error in response from Google server")
             print("Page received from Google: \n", etree.tostring(googleResponse.root).decode("utf-8"))
             # EXIT PROGRAM HERE
