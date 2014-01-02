@@ -33,7 +33,7 @@ class FoursquareSearch():
             'sw': box.WS,
             'q' : self.keyword}
       response = requester.send_request(req, 0, 0)
-      resp = ResponseParser(response)
+      resp = ResponseParser(response, logger)
       logger.log_scan(str(box.bounds())+" : "+ str(resp.resultsN) +" results")
       
       # Get markers from response
@@ -52,13 +52,22 @@ class ResponseParser():
    resultsN = 0
 
    # Returns status of response
-   def __init__(self, response):
+   def __init__(self, response, logger):
       self.results = []
       root = etree.HTML(response)
       
-      script  = root.find("body//script").text
-      pattern = r"(fourSq.config.explore.response = {)(.*?)(};)"
-      obj     = '{' + re.search(pattern, script).group(2) + '}'
+      try:
+         script  = root.find("body//script").text
+         pattern = r"(fourSq.config.explore.response = {)(.*?)(};)"
+         obj     = '{' + re.search(pattern, script).group(2) + '}'
+      except ValueError:
+         print("Could not locate script tag in response. Will log response to scan.")
+         logger.log_scan("Response was: "+str(response))
+      except:
+         print("Could not parse response properly. Will log response to scan.")
+         logger.log_scan("Response was: "+str(response))
+         logger.log_scan("Script extracted from response: "+script) 
+         
 
       for item in json.loads(obj)['groups'][0]['items']:
          venue    = item['venue']
