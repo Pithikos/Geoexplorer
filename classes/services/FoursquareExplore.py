@@ -15,8 +15,8 @@ class FoursquareSearch():
          'MAX_RESULTS' : 30
       },
       'box': {
-         'MAX_X_DISTANCE' : 280000,  # max width  in real m.
-         'MAX_Y_DISTANCE' : 280000,  # max height in real m.
+         'MAX_X_DISTANCE' : 50000,  # max width  in real m.
+         'MAX_Y_DISTANCE' : 50000,  # max height in real m.
       }
    }
 
@@ -111,16 +111,13 @@ class FoursquareRequester():
             "&ne=" + str(ne[0]) + "%2C" + str(ne[1]) +\
             "&sw=" + str(sw[0]) + "%2C" + str(sw[1]) +\
             "&q=" + q
-
-      while (retries!=maxRetries):
-         retries+=1
-         try:
-            return urlopen(url).read()
-         except HTTPError:
-            print("404: Is the link correct?")
-            return None
-         except URLError:
-            print("Domain in URL doesn't exist")
-            return None
-         if (retries == maxRetries):
-            print("Query limit exceeded for today. Scanning stopped.")
+      try:
+         return urlopen(url).read()
+      except HTTPError:
+         print("404: Is the link correct?")
+         print("Link given was:", url)
+         return None
+      except URLError:
+         print("Domain in URL doesn't exist")
+         print("Url was:", url)
+         return None
