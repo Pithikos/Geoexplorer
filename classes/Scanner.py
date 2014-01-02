@@ -75,8 +75,15 @@ class Scanner:
       
       if (lat1<lat2):
          bounds=(lat2, lng1, lat1, lng2)
+         lat1cp = lat1
+         lat1 = lat2
+         lat2 = lat1cp
       if (lng1>lng2):
-         bounds=(lat1, lng2, lat2, lng1)
+         lng1cp = lng1
+         lng1 = lng2
+         lng2 = lng1cp
+         
+      bounds=(lat1, lng1, lat2, lng2)
          
       self.bounds=bounds
       self.GUI.center_map(bounds[0], bounds[1], bounds[2], bounds[3])
@@ -121,7 +128,7 @@ class Scanner:
          self.currentBox=box
          sleep(self.config['scheduler']['NEXT_SEARCH_WAIT'])
          self.GUI.remove_box(box)
-         self.GUI.add_box(box, 'green')
+         self.GUI.add_box(box, 'yellow')
 
          markers = self.service.search(box, logger) # HERE WE SEARCH BOX
          max_results = self.config['service']['response']['MAX_RESULTS']
@@ -156,6 +163,8 @@ class Scanner:
                self.GUI.add_marker(marker[0], marker[1])
 
          # Remove finished box
+         self.GUI.remove_box(box)
+         self.GUI.add_box(box, 'green')
          toScan.pop(0)
          consequentReqRetries=0
          

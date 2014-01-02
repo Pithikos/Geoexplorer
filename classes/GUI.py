@@ -20,6 +20,8 @@ class GUI:
          colorhex='#FF0000'
       elif (color=='green'):
          colorhex='#00FF00'
+      elif (color=='yellow'):
+         colorhex='#FFFF00'
       self.messenger.send("draw:box:"+str(lat1)+","+str(lng1)+","+str(lat2)+","+str(lng2)+","+colorhex)
 
 
