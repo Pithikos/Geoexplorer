@@ -5,13 +5,12 @@ Important:
 * Threading. At current state, the Messenger does not exit when parent
   is exiting.
 * Use an actual timer between requests so that sleeping between them is
-  accurate.
+  accurate. Now the sleep is just added to the overall time it takes for
+  the scan+processing.
   
 
 Main program:
 
-* Autosplit box once maximum results are given from a box scan. For this, a new
-  entry in the config has to be added
 * Change the design of the services a bit so development is easier:
   - logger.log_scan could be automated so user doesn't need to handle it
   - use a set of properties for a service. These "rules" are essentially
@@ -19,7 +18,7 @@ Main program:
 * Add filters. These can be services themselves or something else that filters
   away some of the markers by providing a criteria.
 * Make it easy to link a populator service with a filter.
-* Merging services should be allowed.
+* Let the user merge services.
 
 
 GUI:
