@@ -124,7 +124,7 @@ class FoursquareRequester():
             "&ne=" + str(ne[0]) + "%2C" + str(ne[1]) +\
             "&sw=" + str(sw[0]) + "%2C" + str(sw[1]) +\
             "&q=" + q
-      print(url)
+      #print(url)
       try:
          return urlopen(url).read()
       except HTTPError:
