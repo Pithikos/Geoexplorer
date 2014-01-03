@@ -52,11 +52,6 @@ class GUI:
       self.messenger.send(message)
 
 
-   def add_grid(self, grid):
-      for box in grid.boxes:
-         self.add_box(box, 'red')
-
-
 # Used by the GUI class
 class Messenger(WebSocketServer):
 

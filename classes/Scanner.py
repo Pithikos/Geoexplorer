@@ -28,14 +28,12 @@ class Scanner:
    boxesNinit      = 0
    boxesN          = 0
    requestsTotal   = 0
+   resultsTotal    = 0
    costTotal       = 0
    minTimeInterval = 'INF'
    maxTimeInterval = 0
    sumIntervalsSecs = 0
    
-   # Current box scan
-   currentBox         = None
-
    # Vars
    bounds    = None    #bounds in latitude and longtitude [x, y, x2, y2]
    
@@ -126,17 +124,12 @@ class Scanner:
 
       # Scan each box
       toScan=list(grid.boxes)
-      consequentReqRetries=0
       boxScanStart = None
       isFirstScan    = True
       while(toScan):
-         
          box=toScan[0]
-         self.currentBox=box
-         sleep(self.config['scheduler']['NEXT_SEARCH_WAIT'])
          self.GUI.remove_box(box)
          self.GUI.add_box(box, 'yellow')
-
 
          # Timing interval between last box scan
          if isFirstScan:
@@ -152,26 +145,24 @@ class Scanner:
             if (self.minTimeInterval=='INF' or secs < self.minTimeInterval):
                self.minTimeInterval = secs
             self.sumIntervalsSecs+=secs
+         waitTime = self.config['scheduler']['NEXT_SEARCH_WAIT']
+         sleep(waitTime)
          
-         
-         # Search box
-         markers = self.service.search(box, logger) 
-         max_results = self.config['service']['response']['MAX_RESULTS']
-         
-         
-         # Update some stats
+         # Scan box
+         markers = self.service.search(box, logger)
+
+         # Update costs after scan
          self.requestsTotal +=1
          self.costTotal += self.config['service']['request']['COST_PER_REQUEST']
          logger.update_session()
-
 
          # Max cost reached
          max_cost_day = self.config['service']['request']['MAX_COST_DAY']
          if max_cost_day!='INF' and self.costTotal > max_cost_day:
             print("max cost per day reached")
          
-         
          # Autosplit
+         max_results = self.config['service']['response']['MAX_RESULTS']
          if self.config['box']['AUTOSPLIT'] and max_results!='INF' and\
                                              len(markers) >= max_results:
             logger.log_scan("Response had max possible results. Autosplitting..")
@@ -185,19 +176,16 @@ class Scanner:
             toScan.insert(3, boxes[3])
             continue
 
-
-         # Add marker on map
+         # Add markers on map
          for marker in markers:
             if (len(marker)>=2):
                self.GUI.add_marker(marker[0], marker[1])
-
+               self.resultsTotal+=1
 
          # Remove finished box
          self.GUI.remove_box(box)
          self.GUI.add_box(box, 'green')
          toScan.pop(0)
-         consequentReqRetries=0
-
 
       # Finish
       self.sessionEnd=datetime.now()
@@ -236,7 +224,7 @@ class Scanner:
                      self.config['box']['X_DISTANCE'] = rules['box']['MAX_X_DISTANCE']
                   if self.config['box']['Y_DISTANCE'] > rules['box']['MAX_Y_DISTANCE']:
                      self.config['box']['Y_DISTANCE'] = rules['box']['MAX_Y_DISTANCE']
-               
+
                # Min sleep between requests
                elif subject=='request' and key=='MIN_REQUEST_INTERVAL':
                   if self.config['scheduler']['NEXT_SEARCH_WAIT'] < rules['request']['MIN_REQUEST_INTERVAL']:

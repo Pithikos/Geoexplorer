@@ -18,9 +18,8 @@ function addMarker(lat, lng) {
 }
 
 
-// General box
+// Add box on map
 function addBox(lat1, lng1, lat2, lng2, color) {
-   var index = makeIndex(lat1, lng1, lat2, lng2)
    var loc1=new google.maps.LatLng(lat1, lng1)
    var loc2=new google.maps.LatLng(lat2, lng2)
    var rectangle = new google.maps.Rectangle({
@@ -32,10 +31,12 @@ function addBox(lat1, lng1, lat2, lng2, color) {
       map: map,
       bounds: new google.maps.LatLngBounds(loc1, loc2)
   });
+  var index = makeIndex(lat1, lng1, lat2, lng2)
   boxes[index] = rectangle
 }
 
-// Removes ANY box at specific coordinates
+
+// Removes box from map
 function removeBox(lat1, lng1, lat2, lng2) {
    var index = makeIndex(lat1, lng1, lat2, lng2)
    boxes[index].setMap(null);
@@ -72,7 +73,8 @@ function boxBoundsStr(box) {
 // Prints all boxes
 function showBoxes() {
    var line = ''
-   for (var box in boxes)
+   for (var key in boxes)
+      var box = boxes[key]
       line += "("+boxBoundsStr(box)+"), "
    msg("Boxes: "+line)
 }

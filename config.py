@@ -20,8 +20,12 @@ config={
    'NEW_FOLDER_EACH_SESSION' :  False,        # True if you want a new folder to be created for each scanning session
 
    # Scanning area
-   'SCANNING_AREA' : (61.5, 19, 59, 14),      #Stockholm
-   #'SCANNING_AREA' : (59.35, 18.05, 59.34, 18.07),
+   #'SCANNING_AREA' : (61.5, 19, 59, 14),              # Central Sweden
+   #'SCANNING_AREA' : (59.35, 18.05, 59.34, 18.07),    # Stockholm
+   #'SCANNING_AREA' : (60, 15, 59, 18),                # Big area
+   #'SCANNING_AREA' : (60, 15, 59.5, 17),              # Big area, 47 results, but 46 counted
+   'SCANNING_AREA' : (59.625, 16.5, 59.59375, 16.625), # The Max problem. As above but centralized.
+   #'SCANNING_AREA' : (60, 15.9, 59.75, 17),           # Box overlapping occurs
 
    # Scanning box options
    'box':
@@ -34,8 +38,7 @@ config={
    # Timing different events
    'scheduler':
    {
-      'NEXT_SEARCH_WAIT'    :   0, # Seconds to wait before going to next box
-      'ON_QUERY_LIMIT_WAIT' :   3, # Seconds to wait when service hits query limit
+      'NEXT_SEARCH_WAIT' :   0, # Seconds to wait before scanning next box
    },
    
    

@@ -15,14 +15,12 @@ class Grid:
 
    # Creates a rectangle grid between two points
    def __init__(self, bounds, scanner, GUI):
-      
+
       self.GUI = GUI
-      
       self.maxBoxX = scanner.config['box']['X_DISTANCE']
       self.maxBoxY = scanner.config['box']['Y_DISTANCE']
-      
-      box=Box(bounds)
-      self.boxes.append(box)
+      self.boxes.append(Box(bounds))
+      self.GUI.add_boxes(self.boxes, 'red')
       
       # Split grid into smaller boxes if needed
       while(self.existsTooBigBox()):
@@ -33,9 +31,6 @@ class Grid:
                self.splitBoxVertically(box)
             elif (box.yMeters>self.maxBoxY):
                self.splitBoxHorizontally(box)
-               
-      # Draw the grid
-      GUI.add_grid(self)
       
       # Sort boxes
       self.sortBoxes()
@@ -102,7 +97,7 @@ class Grid:
       # GUI
       self.GUI.remove_box(oldbox)
       self.GUI.add_boxes(boxes, 'red')
-      
+
       return boxes
 
 

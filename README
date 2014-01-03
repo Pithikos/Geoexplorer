@@ -60,8 +60,7 @@ Each option is described bellow:
       Y_DISTANCE            -> Desirable distance in m. for a box' y axis
 
       'scheduler'
-      NEXT_SEARCH_WAIT      -> Seconds to wait before going to next box
-      ON_QUERY_LIMIT_WAIT   -> Seconds to wait when service hits query limit
+      NEXT_SEARCH_WAIT      -> Seconds to wait before going scanning next box
 
 The 'service' entry is used as a template by the services and should not
 be altered.
