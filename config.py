@@ -22,10 +22,7 @@ config={
    # Scanning area
    #'SCANNING_AREA' : (61.5, 19, 59, 14),              # Central Sweden
    #'SCANNING_AREA' : (59.35, 18.05, 59.34, 18.07),    # Stockholm
-   #'SCANNING_AREA' : (60, 15, 59, 18),                # Big area
-   #'SCANNING_AREA' : (60, 15, 59.5, 17),              # Big area, 47 results, but 46 counted
-   'SCANNING_AREA' : (59.625, 16.5, 59.59375, 16.625), # The Max problem. As above but centralized.
-   #'SCANNING_AREA' : (60, 15.9, 59.75, 17),           # Box overlapping occurs
+   'SCANNING_AREA' : (60, 15, 59, 18),                # Big area
 
    # Scanning box options
    'box':

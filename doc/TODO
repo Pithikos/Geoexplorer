@@ -7,7 +7,9 @@ Important:
 * Use an actual timer between requests so that sleeping between them is
   accurate. Now the sleep is just added to the overall time it takes for
   the scan+processing.
-  
+* Fix the Max problem bug. More documentation about it can be found inside
+  the FoursquareExplore service file.
+
 
 Main program:
 

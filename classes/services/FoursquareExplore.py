@@ -4,12 +4,15 @@ from time import sleep
 import json
 import re
 
+#
 # MAX PROBLEM:
-# Use 'SCANNING_AREA' : (59.625, 16.5, 59.59375, 16.625) for demonstration.
-# In the area there are two MAX reastaurants. Both are logged to the results
-# log file. However only one of the two has a marker on the map.
-# furthermore, as the results count on the Scanner is depended on the amount of
-# markers, we get one less count than what we have in the results log file.
+# Scan (59.625, 16.5, 59.59375, 16.625) for "restaurant".
+# In the area there are two MAX restaurants. Both are logged to the
+# results log file. However only one of the two has a marker on the map.
+# The one lacking a marker is the one just right of Pilgatan street.
+# Furthermore, as the results count variable on the Scanner depends on
+# the amount of markers, we get one less count than what we have in
+# the results log file.
 #
 #
 # Possible solution:
