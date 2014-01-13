@@ -19,7 +19,7 @@ Ubuntu 12.04:
 sudo apt-get install python3 python3-lxml
 
 Windows 7:
-1. Download and install python3.2 from http://www.python.org/download/releases/python3.2.5
+1. Download and install python3.2 from http://www.python.org/download/releases/3.2.5
 2. Edit windows path:
    a. Control Panel -> System -> Advanced system settings
    b. Click the Environment variables... button
