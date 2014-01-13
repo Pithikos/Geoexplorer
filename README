@@ -44,23 +44,27 @@ files. The log files are being updated on-the-fly.
 
 The config.py keeps all the applicable options for Geoexplorer in a single file.
 Each option is described bellow:
-
-      GUI_PORT              -> Port being used for the communication with the GUI
+ 
+      GUI_PORT                -> Port being used for the communication with the
+                                 GUI
       
-      LOG_PATH              -> Folder name where logs should be stored
-      LOG_SCANNING_FILENAME -> Name of file for logging scanning steps
-      LOG_SESSION_FILENAME  -> Name of file for logging statistics fom each scanning session
-      LOG_RESULTS_FILENAME  -> Name of file for logging every single result
-      NEW_FOLDER_EACH_SCAN  -> Should a new folder be created on each new scan?
+      LOG_PATH                -> Folder name where logs should be stored
+      LOG_SCANNING_FILENAME   -> Name of file for logging scanning steps
+      LOG_SESSION_FILENAME    -> Name of file for logging statistics fom each
+                                 scanning session
+      LOG_RESULTS_FILENAME    -> Name of file for logging every single result
+      NEW_FOLDER_EACH_SESSION -> Should a new folder be created on each scanning
+                                 session?
       
-      BOUNDS                -> The coordinates lat, lng, lat2, lng2 for scanning. 
+      BOUNDS                  -> The coordinates lat, lng, lat2, lng2 for
+                                 scanning. 
       
       'box'
-      X_DISTANCE            -> Desirable distance in m. for a box' x axis
-      Y_DISTANCE            -> Desirable distance in m. for a box' y axis
+      X_DISTANCE              -> Desirable distance in m. for a box' x axis
+      Y_DISTANCE              -> Desirable distance in m. for a box' y axis
 
       'scheduler'
-      NEXT_SEARCH_WAIT      -> Seconds to wait before going scanning next box
+      NEXT_SEARCH_WAIT        -> Seconds to wait before going scanning next box
 
 The 'service' entry is used as a template by the services and should not
 be altered.
