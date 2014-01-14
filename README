@@ -4,9 +4,9 @@ Author: Johan Hanssen Seferidis
 Created: 2013-06-20
 
 Description: Geoexplorer is a framework for geographic services that let your
-             bypass many of the service's limitations like the topology. It
-             further lets you log everything and see how the service acts visua-
-             lly.
+             bypass many of the service's limitations like the size of the area.
+             It further lets you log the resulsts from each service and gives
+             the option to see the output of the service live.
 
 
 
