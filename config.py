@@ -1,10 +1,6 @@
 #
-# These configuration values act as the default values
-# no matter which service you use.
-#
-# Still some services will override these values if
-# the given values are not between the service's
-# limitations.
+# These configuration values affect the behaviour of
+# the framework no matter which service you use.
 #
 
 config={
@@ -42,8 +38,8 @@ config={
    # ------------------------------------------------------------------------- #
    
    
-   # These are the options and their values for the services which
-   # are very permissive by default.
+   # These are the options and their values for the services
+   # which are very permissive by default.
    # Most of these will be overdriven by the service being used. The ones not
    # overdriven, will remain permissive.
    'service':
