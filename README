@@ -3,11 +3,12 @@
 Author: Johan Hanssen Seferidis
 Created: 2013-06-20
 
-Description: Geoexplorer is a framework meant to be used for geographic services.
-             The frameowkr let's you to bypass many of the service's limitations
-             like the size of the area. It further lets you log the results from
-             each service and gives the option to see the output of the service
-             live.
+Description: Geoexplorer is a framework meant to be used for geographic 
+             services.
+             The framework let's you bypass many of the service's limitations
+             like the size of the area where the service is applied. It
+             further lets you log the results from each service and
+             gives the option to see the output of the service live.
 
 
 
