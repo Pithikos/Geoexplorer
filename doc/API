@@ -78,7 +78,9 @@ Properties:
    
 Methods:
         bounds()          →  Gives the bounds of the box
-   
+        length_lat        →  Latitude length of the box
+        length_lng        →  Longitude length of the box
+
 
 ---- Logger object----
 

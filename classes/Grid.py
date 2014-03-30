@@ -172,3 +172,9 @@ class Box:
 
    def bounds(self):
       return self.WN[0], self.WN[1], self.SE[0], self.SE[1]
+
+   def length_lat(self):
+      return abs(self.WN[0]-self.SE[0])
+      
+   def length_lng(self):
+      return abs(self.WN[1]-self.SE[1])
