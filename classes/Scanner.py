@@ -1,5 +1,3 @@
-from lxml import etree
-
 from classes.GUI import *
 from classes.Grid import *
 from classes.Logger import *
