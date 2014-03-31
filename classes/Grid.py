@@ -1,4 +1,4 @@
-from lib.geotools import *
+from lib.geotools import dist, middleLat, middleLng
 
 # Grid is made out of box instances
 class Grid:
