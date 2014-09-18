@@ -1,4 +1,5 @@
-================================= GEOEXPLORER  =================================
+Geoexplorer
+========================================================================
 
 Author:        Johan Hanssen Seferidis
 Created:       2013-06-20
@@ -7,11 +8,13 @@ Description:   Geoexplorer is a framework meant to be used for black-box-testing
                and/or scraping data from geographic services like Google Places
                and Foursquare.
              
-Documentation: Check the doc folder.
+Documentation: Full documentation both for developers and users can be
+               found in the doc folder.
 
 
 
-============================= Install dependencies =============================
+Install dependencies
+========================================================================
 
 Ubuntu 13.10:
 Works out of the box.
@@ -28,8 +31,8 @@ Windows 7:
 3. Install the lxml3.2 from http://pypi.python.org/pypi/lxml/3.2.4
 
 
-
-==================================== Usage =====================================
+Usage
+========================================================================
 
 Running some examples:
 1. Run "python3 examples/<example>.py", substituting <example> with one of the example files
@@ -39,8 +42,8 @@ A log directory will be created with the log
 files. The log files are being updated on-the-fly.
 
 
-
-================================ Configuration =================================
+Configuration
+========================================================================
 
 The config.py keeps all the applicable options for Geoexplorer in a single file.
 Each option is described bellow:
@@ -70,8 +73,8 @@ The 'service' entry is used as a template by the services and should not
 be altered.
 
 
-
-=================================== Logging ====================================
+Logging
+========================================================================
 
 There are three files for logging different things.
 
@@ -81,11 +84,9 @@ SCANNING: This is the main debugging log file. Every scanning step is recorded
 RESULTS:  This keeps all the results extracted during the scanning session
 
 
-
-=============================== Troubleshooting ================================
+Troubleshooting
+========================================================================
 
 The map in the GUI doesn't show any boxes.
 A. Try to install the latest firefox web browser. The GUI will not work
    for old browsers(IE8 for example).
-
-
