@@ -32,9 +32,8 @@ Windows 7:
 ==================================== Usage =====================================
 
 Running some examples:
-1. Enter the directory "examples"
-2. Run "python3 <example>.py", substituting <example> with one of the example files
-3. Open /GUI/index.html with a webbrowser to see live what is going on
+1. Run "python3 examples/<example>.py", substituting <example> with one of the example files
+2. Open /GUI/index.html with a webbrowser to see live what is going on
 
 A log directory will be created with the log
 files. The log files are being updated on-the-fly.
