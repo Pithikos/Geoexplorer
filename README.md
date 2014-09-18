@@ -23,23 +23,23 @@ Ubuntu 12.04:
 sudo apt-get install python3 python3-lxml
 
 Windows 7:
-1. Download and install python3.2 from http://www.python.org/download/releases/3.2.5
-2. Edit windows path:
-   a. Control Panel -> System -> Advanced system settings
-   b. Click the Environment variables... button
-   c. Edit PATH and append ;C:\python32\
-3. Install the lxml3.2 from http://pypi.python.org/pypi/lxml/3.2.4
+  1. Download and install python3.2 from http://www.python.org/download/releases/3.2.5
+  2. Edit windows path:
+     a. Control Panel -> System -> Advanced system settings
+     b. Click the Environment variables... button
+     c. Edit PATH and append ;C:\python32\
+  3. Install the lxml3.2 from http://pypi.python.org/pypi/lxml/3.2.4
 
 
 Usage
 ========================================================================
 
-Running some examples:
-1. Run "python3 examples/<example>.py", substituting <example> with one of the example files
-2. Open /GUI/index.html with a webbrowser to see live what is going on
+  1. Run "python3 examples/<example>.py", substituting <example> with one
+     of the example files
+  2. Open /GUI/index.html with a webbrowser to see live what is going on
 
-A log directory will be created with the log
-files. The log files are being updated on-the-fly.
+A folder called *log* will be created at the current directory. This
+folder with be populated with log files on-the-fly.
 
 
 Configuration
@@ -78,10 +78,10 @@ Logging
 
 There are three files for logging different things.
 
-SESSION:  Different statistics for the whole scanning session
-SCANNING: This is the main debugging log file. Every scanning step is recorded
-          in this file.
-RESULTS:  This keeps all the results extracted during the scanning session
+      SESSION:  Different statistics for the whole scanning session
+      SCANNING: This is the main debugging log file. Every scanning step is recorded
+                in this file.
+      RESULTS:  This keeps all the results extracted during the scanning session
 
 
 Troubleshooting
