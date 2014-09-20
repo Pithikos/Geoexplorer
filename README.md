@@ -2,14 +2,17 @@ Geoexplorer
 ========================================================================
 
 Johan Hanssen Seferidis
+
 2013-06-20
 
 *Description*
+
 Geoexplorer is a framework meant to be used for black-box-testing
 and/or scraping data from geographic services like Google Places
 and Foursquare.
              
 *Documentation*
+
 Full documentation both for developers and users can be
 found in the doc folder.
 
