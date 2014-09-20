@@ -34,7 +34,7 @@ Works out of the box.
 Usage
 ========================================================================
 
-  1. Run `python3 examples/<example>.py` substituting *<example>* with one
+  1. Run `python3 examples/<example>.py` substituting *\<example\>* with one
      of the example files
   2. Open `GUI/index.html` with a webbrowser to see live what is going on
 
