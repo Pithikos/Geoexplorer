@@ -25,9 +25,9 @@ Works out of the box.
 
 1. Download and install *python3.2* from http://www.python.org/download/releases/3.2.5
 2. Edit windows path
-..* *Control Panel* -> *System* -> *Advanced system settings*
-..* Click the *Environment variables...* button
-..* Edit *PATH* and append *;C:\python32\*
+    * *Control Panel* -> *System* -> *Advanced system settings*
+    * Click the *Environment variables...* button
+    * Edit *PATH* and append *;C:\python32\*
 3. Install the *lxml3.2* from http://pypi.python.org/pypi/lxml/3.2.4
 
 
