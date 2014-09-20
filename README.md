@@ -16,30 +16,37 @@ Documentation: Full documentation both for developers and users can be
 Install dependencies
 ========================================================================
 
-Ubuntu 13.10:
+**Ubuntu 13.10**
+
 Works out of the box.
 
-Ubuntu 12.04:
-sudo apt-get install python3 python3-lxml
+**Ubuntu 12.04**
 
-Windows 7:
-  1. Download and install python3.2 from http://www.python.org/download/releases/3.2.5
-  2. Edit windows path:
-     a. Control Panel -> System -> Advanced system settings
-     b. Click the Environment variables... button
-     c. Edit PATH and append ;C:\python32\
-  3. Install the lxml3.2 from http://pypi.python.org/pypi/lxml/3.2.4
+    sudo apt-get install python3 python3-lxml
+
+**Windows 7**
+
+1. Download and install *python3.2* from http://www.python.org/download/releases/3.2.5
+2. Edit windows path:
+..1. *Control Panel* -> *System* -> *Advanced system settings*
+..2. Click the *Environment variables...* button
+..3. Edit *PATH* and append *;C:\python32\*
+3. Install the *lxml3.2* from http://pypi.python.org/pypi/lxml/3.2.4
 
 
 Usage
 ========================================================================
 
-  1. Run "python3 examples/<example>.py", substituting <example> with one
+  1. Run `python3 examples/<example>.py`, substituting <example> with one
      of the example files
-  2. Open /GUI/index.html with a webbrowser to see live what is going on
+  2. Open `GUI/index.html` with a webbrowser to see live what is going on
 
-A folder called *log* will be created at the current directory. This
-folder with be populated with log files on-the-fly.
+Some services like *Google Radar* require an **API** key. You can edit that by
+adding it in the source (ie. examples/google_radar_search.py).
+
+Once running, a folder called *log* will be created at the current directory.
+This folder with be populated with log files on-the-fly. These can be used to
+debug the search and see the results.
 
 
 Configuration
@@ -69,7 +76,7 @@ Each option is described bellow:
       'scheduler'
       NEXT_SEARCH_WAIT        -> Seconds to wait before going scanning next box
 
-The 'service' entry is used as a template by the services and should not
+The 'service' entry (not shown above) is used as a template by the services and should not
 be altered.
 
 
