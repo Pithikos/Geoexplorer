@@ -1,15 +1,17 @@
 Geoexplorer
 ========================================================================
 
-Author:        Johan Hanssen Seferidis
-Created:       2013-06-20
+Johan Hanssen Seferidis
+2013-06-20
 
-Description:   Geoexplorer is a framework meant to be used for black-box-testing
-               and/or scraping data from geographic services like Google Places
-               and Foursquare.
+*Description*
+Geoexplorer is a framework meant to be used for black-box-testing
+and/or scraping data from geographic services like Google Places
+and Foursquare.
              
-Documentation: Full documentation both for developers and users can be
-               found in the doc folder.
+*Documentation*
+Full documentation both for developers and users can be
+found in the doc folder.
 
 
 
@@ -28,9 +30,9 @@ Works out of the box.
 
 1. Download and install *python3.2* from http://www.python.org/download/releases/3.2.5
 2. Edit windows path:
-..1. *Control Panel* -> *System* -> *Advanced system settings*
-..2. Click the *Environment variables...* button
-..3. Edit *PATH* and append *;C:\python32\*
+.. 1. *Control Panel* -> *System* -> *Advanced system settings*
+.. 2. Click the *Environment variables...* button
+.. 3. Edit *PATH* and append *;C:\python32\*
 3. Install the *lxml3.2* from http://pypi.python.org/pypi/lxml/3.2.4
 
 
