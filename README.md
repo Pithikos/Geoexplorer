@@ -6,7 +6,7 @@ and/or scraping data from geographic services like Google Places
 and Foursquare.
 
 Full documentation both for developers and users can be
-found in the doc folder.
+found in the *doc* folder of the project. The full API is there as well.
 
 
 
@@ -25,9 +25,9 @@ Works out of the box.
 
 1. Download and install *python3.2* from http://www.python.org/download/releases/3.2.5
 2. Edit windows path
-    * *Control Panel* -> *System* -> *Advanced system settings*
-    * Click the *Environment variables...* button
-    * Edit *PATH* and append *;C:\python32\*
+    * Go to *Control Panel* > *System* > *Advanced system settings*
+    * Click the *Environment variables..* button
+    * Edit *PATH* and append `;C:\python32\`
 3. Install the *lxml3.2* from http://pypi.python.org/pypi/lxml/3.2.4
 
 
