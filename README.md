@@ -91,6 +91,7 @@ There are three files for logging different things.
 Troubleshooting
 ========================================================================
 
-The map in the GUI doesn't show any boxes.
-A. Try to install the latest firefox web browser. The GUI will not work
+**The map in the GUI doesn't show any boxes.**
+
+*A.* Try to install the latest firefox web browser. The GUI will not work
    for old browsers(IE8 for example).
